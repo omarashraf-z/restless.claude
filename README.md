@@ -128,12 +128,20 @@ Needed from Restless before the site can go public:
       not a content one — worth settling early)
 - [ ] A domain
 
-Three things to fix on the printed menu, corrected on the site:
+## Spellings kept from the print
 
-- The breakfast omelette page reads "RISTLESS OMELETTE"
-- The coffee page reads "Café Latte 16oz (Truple Shot)"
-- Cheese Croissant is 109.99 under Baked Goods and 149.99 as a croissant sandwich —
-  presumably plain-baked versus made up, but confirm so the site doesn't look wrong
+The site matches the printed menu exactly, including two misspellings. Both are marked
+with a `_spelling` note in `data/menu.json` so nobody silently "corrects" them later:
+
+- **"Ristless Omelette with Smoked Salmon"** — the breakfast omelette page. Note the same
+  dish is spelled *Restless* on the Special Omelette page, and the site follows each page.
+- **"Café Latte 16oz (Truple shot)"** — the hot coffee page.
+
+Change the printed menu first, then change these.
+
+One open question: Cheese Croissant is 109.99 under Baked Goods and 149.99 as a croissant
+sandwich — presumably plain-baked versus made up as a sandwich, but worth confirming so
+the site doesn't read as contradicting itself.
 
 Still to build:
 

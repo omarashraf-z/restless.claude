@@ -238,7 +238,7 @@
                 { "name": "Armenian Sausage with Cheese Omelette", "price": 329.99 },
                 { "name": "Greek Sausage with Cheese Omelette", "price": 329.99 },
                 { "name": "Smoked Turkey with Cheese Omelette", "description": "Smoked turkey, cheddar cheese", "price": 329.99 },
-                { "name": "Restless Omelette with Smoked Salmon", "description": "100g smoked salmon served with our special egg omelette and your choice of potato", "price": 379.99 }
+                { "name": "Ristless Omelette with Smoked Salmon", "_spelling": "Spelled 'Ristless' on the printed menu. Kept deliberately to match the print — do not 'fix' it without asking.", "description": "100g smoked salmon served with our special egg omelette and your choice of potato", "price": 379.99 }
               ]
             }
           ]
@@ -411,7 +411,7 @@
             { "name": "Café Americano", "price": 99.99 },
             { "name": "American Coffee", "price": 99.99 },
             { "name": "Cappuccino Grande", "price": 109.99 },
-            { "name": "Café Latte 16oz", "description": "Triple shot", "price": 109.99 },
+            { "name": "Café Latte 16oz", "description": "Truple shot", "_spelling": "Spelled 'Truple' on the printed menu. Kept deliberately to match the print — do not 'fix' it without asking.", "price": 109.99 },
             { "name": "Café Mocha", "price": 109.99 },
             { "name": "Double French Coffee", "price": 109.99 },
             { "name": "Spanish Latte", "price": 109.99 },
