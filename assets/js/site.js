@@ -15,6 +15,7 @@ const DAY_KEYS = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
 const CAIRO_TZ = 'Africa/Cairo';
 
 const LANG_KEY = 'restless.lang';
+const ORDER_KEY = 'restless.order';
 
 /* Arabic faces are only fetched when Arabic is actually chosen, so an English
  * visitor never pays for them. Amiri is a naskh with the period feel the brand
@@ -39,7 +40,7 @@ const base = () => document.documentElement.dataset.base || '';
 
 /* -- language ------------------------------------------------------------- */
 
-const state = { lang: 'en', i18n: null, site: null, menu: null };
+const state = { lang: 'en', i18n: null, site: null, menu: null, order: new Map() };
 
 /* A stored choice always wins. Failing that, an Arabic-speaking browser gets
  * Arabic — but storage can throw in private modes, so never let it break the
@@ -289,9 +290,200 @@ function wireContacts(site) {
   }
 }
 
+/* -- order -----------------------------------------------------------------
+ *
+ * Restless has no ordering system, and building one would mean payments,
+ * accounts and a monthly bill. This does the useful 90%: the visitor picks
+ * items, and the WhatsApp button composes the order as a message they send
+ * themselves. Nothing is transmitted anywhere until they hit send.
+ *
+ * The basket lives in their own browser and survives navigation between pages.
+ * Items are stored with their name and price rather than a pointer into the
+ * menu, so a later menu edit can never silently rewrite someone's basket. */
+
+const money = (n) =>
+  new Intl.NumberFormat('en-EG', { minimumFractionDigits: 2 }).format(n);
+
+function loadOrder() {
+  try {
+    const raw = JSON.parse(localStorage.getItem(ORDER_KEY) || '[]');
+    if (Array.isArray(raw)) {
+      for (const line of raw) {
+        if (line?.key && line.qty > 0) state.order.set(line.key, line);
+      }
+    }
+  } catch { /* unreadable or unavailable — start empty */ }
+}
+
+function saveOrder() {
+  try {
+    localStorage.setItem(ORDER_KEY, JSON.stringify([...state.order.values()]));
+  } catch { /* private mode — the basket just won't outlive the page */ }
+}
+
+const orderCount = () => [...state.order.values()].reduce((n, l) => n + l.qty, 0);
+const orderTotal = () => [...state.order.values()].reduce((n, l) => n + l.qty * l.price, 0);
+
+function changeQty(key, name, price, delta) {
+  const line = state.order.get(key) ?? { key, name, price, qty: 0 };
+  line.qty += delta;
+  line.name = name;
+  line.price = price;
+
+  if (line.qty > 0) state.order.set(key, line);
+  else state.order.delete(key);
+
+  saveOrder();
+  renderOrder();
+}
+
+function orderMessage(currency) {
+  const lines = [...state.order.values()]
+    .map((l) => `• ${l.qty}× ${l.name} — ${money(l.qty * l.price)} ${currency}`);
+
+  return [
+    t('order.msgIntro'),
+    '',
+    ...lines,
+    '',
+    `${t('order.subtotal')}: ${money(orderTotal())} ${currency}`,
+    t('order.beforeTax')
+  ].join('\n');
+}
+
+/* Quantity control shown on every priced item. */
+function orderControl(key, name, price) {
+  const wrap = el('div', 'qty');
+  const line = state.order.get(key);
+  const qty = line?.qty ?? 0;
+
+  const button = (label, delta, aria) => {
+    const b = el('button', 'qty-btn', label);
+    b.type = 'button';
+    b.setAttribute('aria-label', t(aria, { item: name }));
+    b.addEventListener('click', () => changeQty(key, name, price, delta));
+    return b;
+  };
+
+  if (qty > 0) {
+    wrap.append(button('−', -1, 'order.decrease'));
+    const count = el('span', 'qty-count', String(qty));
+    count.setAttribute('aria-live', 'polite');
+    wrap.append(count);
+  }
+  wrap.append(button('+', +1, 'order.add'));
+  wrap.dataset.active = String(qty > 0);
+
+  // Carried on the element so a quantity change can rebuild just this control
+  // in place, instead of re-rendering all 254 rows and losing scroll position.
+  wrap.dataset.orderKey = key;
+  wrap.dataset.orderName = name;
+  wrap.dataset.orderPrice = String(price);
+  return wrap;
+}
+
+/* The bar is built in script rather than markup so it exists on every page —
+ * a basket started on the menu can still be sent from Visit. */
+function orderBar() {
+  let bar = document.getElementById('order-bar');
+  if (bar) return bar;
+
+  bar = el('div', 'order-bar');
+  bar.id = 'order-bar';
+  bar.hidden = true;
+
+  const panel = el('div', 'order-panel');
+  panel.id = 'order-panel';
+  panel.hidden = true;
+
+  const summary = el('button', 'order-summary');
+  summary.type = 'button';
+  summary.setAttribute('aria-controls', 'order-panel');
+  summary.setAttribute('aria-expanded', 'false');
+  summary.addEventListener('click', () => {
+    const open = panel.hidden;
+    panel.hidden = !open;
+    summary.setAttribute('aria-expanded', String(open));
+    renderOrder();
+  });
+
+  const send = el('a', 'btn btn--primary order-send');
+  send.dataset.whatsapp = '';
+
+  const row = el('div', 'order-row');
+  row.append(summary, send);
+  bar.append(panel, row);
+  document.body.append(bar);
+  return bar;
+}
+
+function renderOrder() {
+  // Rebuild the controls on screen so their counts match the basket.
+  for (const node of [...document.querySelectorAll('.qty[data-order-key]')]) {
+    const { orderKey, orderName, orderPrice } = node.dataset;
+    node.replaceWith(orderControl(orderKey, orderName, Number(orderPrice)));
+  }
+
+  const bar = orderBar();
+  const count = orderCount();
+  const currency = state.menu?.currency ?? state.site?.currency ?? 'EGP';
+
+  bar.hidden = count === 0;
+  document.body.classList.toggle('has-order', count > 0);
+  if (count === 0) {
+    bar.querySelector('.order-panel').hidden = true;
+    bar.querySelector('.order-summary').setAttribute('aria-expanded', 'false');
+    return;
+  }
+
+  const summary = bar.querySelector('.order-summary');
+  summary.replaceChildren(
+    el('span', 'order-count', t(count === 1 ? 'order.itemOne' : 'order.itemMany', { n: count })),
+    el('span', 'order-total', `${money(orderTotal())} ${currency}`)
+  );
+
+  const panel = bar.querySelector('.order-panel');
+  if (!panel.hidden) {
+    const list = el('ul', 'order-lines');
+    for (const line of state.order.values()) {
+      const li = el('li');
+      li.append(el('span', 'order-line-name', line.name));
+      li.append(el('span', 'order-line-sum', `${money(line.qty * line.price)} ${currency}`));
+      li.append(orderControl(line.key, line.name, line.price));
+      list.append(li);
+    }
+
+    const clear = el('button', 'order-clear', t('order.clear'));
+    clear.type = 'button';
+    clear.addEventListener('click', () => {
+      state.order.clear();
+      saveOrder();
+      renderOrder();
+      if (state.menu) renderAll();
+    });
+
+    panel.replaceChildren(
+      el('p', 'order-title', t('order.title')),
+      list,
+      el('p', 'order-note', t('order.beforeTax')),
+      clear
+    );
+  }
+
+  const send = bar.querySelector('.order-send');
+  send.textContent = t('order.send');
+  if (state.site?.whatsapp?.enabled) {
+    send.href = `https://wa.me/${state.site.whatsapp.number}?text=${encodeURIComponent(orderMessage(currency))}`;
+    send.removeAttribute('aria-disabled');
+  } else {
+    send.removeAttribute('href');
+    send.setAttribute('aria-disabled', 'true');
+  }
+}
+
 /* -- menu ----------------------------------------------------------------- */
 
-function buildItem(item, menu, site) {
+function buildItem(item, menu, site, key) {
   const li = el('li', 'menu-item');
   const line = el('div', 'menu-item-line');
 
@@ -299,10 +491,12 @@ function buildItem(item, menu, site) {
   if (item.badge) name.append(el('span', 'badge', field(item, 'badge')));
   line.append(name);
 
-  if (site.showPrices && item.price != null) {
+  const orderable = site.showPrices && item.price != null;
+
+  if (orderable) {
     line.append(el('span', 'menu-leader'));
-    line.append(el('span', 'menu-price',
-      `${new Intl.NumberFormat('en-EG', { minimumFractionDigits: 2 }).format(item.price)} ${menu.currency}`));
+    line.append(el('span', 'menu-price', `${money(item.price)} ${menu.currency}`));
+    line.append(orderControl(key, field(item, 'name'), item.price));
   }
 
   li.append(line);
@@ -312,7 +506,7 @@ function buildItem(item, menu, site) {
   return li;
 }
 
-function buildSection(section, menu, site) {
+function buildSection(section, menu, site, menuId) {
   const wrap = el('section', 'menu-section');
   wrap.id = section.id;
 
@@ -322,19 +516,24 @@ function buildSection(section, menu, site) {
   const note = field(section, 'note');
   if (note) wrap.append(el('p', 'note', note));
 
-  const addList = (items) => {
+  // Names repeat across sections at different prices — "Eggs & Cheese" is 149.99
+  // as a wrap and 179.99 as a sandwich — so the basket key has to be positional.
+  const addList = (items, groupIdx) => {
     const list = el('ul', 'menu-items');
-    for (const item of items) list.append(buildItem(item, menu, site));
+    items.forEach((item, i) => {
+      const key = `${menuId}/${section.id}/${groupIdx}${i}`;
+      list.append(buildItem(item, menu, site, key));
+    });
     wrap.append(list);
   };
 
   if (section.groups?.length) {
-    for (const group of section.groups) {
+    section.groups.forEach((group, gi) => {
       wrap.append(el('h3', 'menu-group', field(group, 'name')));
-      addList(group.items);
-    }
+      addList(group.items, `g${gi}-`);
+    });
   } else if (section.items?.length) {
-    addList(section.items);
+    addList(section.items, '');
   } else {
     wrap.append(el('p', 'empty', t('menu.empty')));
   }
@@ -382,7 +581,7 @@ function renderMenu(root, menu, site, keepIndex = 0) {
       }));
     }
 
-    root.replaceChildren(...active.sections.map((s) => buildSection(s, menu, site)));
+    root.replaceChildren(...active.sections.map((s) => buildSection(s, menu, site, active.id)));
 
     const notice = field(menu, 'notice');
     if (notice) root.append(el('p', 'menu-legal', notice));
@@ -414,6 +613,8 @@ function renderAll() {
   if (menuRoot && menu) {
     renderMenu(menuRoot, menu, site, Number(menuRoot.dataset.activeMenu || 0));
   }
+
+  renderOrder();
 }
 
 /* -- boot ----------------------------------------------------------------- */
@@ -431,6 +632,7 @@ function renderAll() {
   }
 
   state.lang = initialLang(state.i18n);
+  loadOrder();
   applyLanguage();
 
   for (const node of document.querySelectorAll('[data-lang-toggle]')) {

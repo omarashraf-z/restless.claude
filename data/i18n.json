@@ -1,13 +1,18 @@
 {
   "_about": "Interface text in both languages. Every string the site renders itself lives here — nothing is hardcoded in the HTML. Keys match the data-i18n attributes on the pages.",
-
   "_editing": "To fix a wording, edit the value and commit. To add a language, copy a whole block, change the key, and add it to `languages` below. Menu section names live in data/menu.json as nameAr / noteAr; menu item names are not translated — see the README.",
-
   "languages": {
-    "en": { "name": "English", "dir": "ltr", "switchTo": "عربي" },
-    "ar": { "name": "العربية", "dir": "rtl", "switchTo": "English" }
+    "en": {
+      "name": "English",
+      "dir": "ltr",
+      "switchTo": "عربي"
+    },
+    "ar": {
+      "name": "العربية",
+      "dir": "rtl",
+      "switchTo": "English"
+    }
   },
-
   "en": {
     "brand.sub": "Coffee House & Bakery",
     "nav.home": "Home",
@@ -17,7 +22,6 @@
     "skip.content": "Skip to content",
     "skip.menu": "Skip to the menu",
     "lang.aria": "Switch language",
-
     "cta.whatsapp": "Order on WhatsApp",
     "cta.whatsappMessage": "Hi Restless, I'd like to place an order.",
     "cta.whatsappPlain": "WhatsApp",
@@ -29,7 +33,6 @@
     "cta.openMaps": "Open in Google Maps",
     "cta.fullWeek": "Full week",
     "cta.elmenus": "Order on elmenus",
-
     "status.checking": "Checking hours…",
     "status.unconfirmed": "Hours to be confirmed",
     "status.openUntil": "Open now · until {time}",
@@ -49,7 +52,6 @@
     "day.fri": "Friday",
     "day.sat": "Saturday",
     "day.closed": "Closed",
-
     "home.eyebrow": "232 St. · Degla · Maadi",
     "home.title": "Restless",
     "home.tagline": "The perks of the past in the present",
@@ -63,7 +65,6 @@
     "home.find.title": "Where and when",
     "home.hoursShort": "Every day",
     "home.hoursRange": "8am – midnight",
-
     "facts.address": "Address",
     "facts.hours": "Hours",
     "facts.telephone": "Telephone",
@@ -72,14 +73,12 @@
     "facts.parking": "Parking",
     "facts.addressLines": "232 St., cross 213 St.<br>Degla, Maadi, Cairo",
     "facts.parkingTodo": "TODO — a line on where to park, and the Degla landmark that makes 232 St. easy to find.",
-
     "menu.eyebrow": "Menu",
     "menu.title": "What we're serving",
     "menu.loading": "Loading the menu…",
     "menu.tabsAria": "Menus",
     "menu.empty": "Nothing added to this section yet.",
     "menu.failed": "The menu could not be loaded. Please call us on {phone}.",
-
     "visit.eyebrow": "Visit",
     "visit.title": "232 St., cross 213 St.<br>Degla, Maadi",
     "visit.hours.eyebrow": "Opening hours",
@@ -87,13 +86,21 @@
     "visit.hours.note": "Open seven days, Friday included. The kitchen and the bakery both run the full day.",
     "visit.contact.eyebrow": "Contact",
     "visit.contact.title": "Reaching us",
-
     "notice.title": "Still to come",
     "notice.body": "Photography and the story of how Restless started. The palette and type here are taken from the badge, the printed menu and the room — the pictures are the missing half.",
-
-    "foot.name": "Restless Coffee House & Bakery"
+    "foot.name": "Restless Coffee House & Bakery",
+    "order.add": "Add {item}",
+    "order.increase": "Add another {item}",
+    "order.decrease": "Remove one {item}",
+    "order.title": "Your order",
+    "order.itemOne": "1 item",
+    "order.itemMany": "{n} items",
+    "order.subtotal": "Subtotal",
+    "order.beforeTax": "Before 12% service charge and VAT.",
+    "order.send": "Send on WhatsApp",
+    "order.clear": "Clear order",
+    "order.msgIntro": "Hi Restless, I'd like to order:"
   },
-
   "ar": {
     "brand.sub": "مقهى ومخبز",
     "nav.home": "الرئيسية",
@@ -103,7 +110,6 @@
     "skip.content": "تخطَّ إلى المحتوى",
     "skip.menu": "تخطَّ إلى المنيو",
     "lang.aria": "تغيير اللغة",
-
     "cta.whatsapp": "اطلب عبر واتساب",
     "cta.whatsappMessage": "أهلاً Restless، أحب أطلب.",
     "cta.whatsappPlain": "واتساب",
@@ -115,7 +121,6 @@
     "cta.openMaps": "افتح في خرائط جوجل",
     "cta.fullWeek": "كل الأسبوع",
     "cta.elmenus": "اطلب من elmenus",
-
     "status.checking": "جارٍ التحقق من المواعيد…",
     "status.unconfirmed": "المواعيد قيد التأكيد",
     "status.openUntil": "مفتوح الآن · حتى {time}",
@@ -135,7 +140,6 @@
     "day.fri": "الجمعة",
     "day.sat": "السبت",
     "day.closed": "مغلق",
-
     "home.eyebrow": "شارع 232 · دجلة · المعادي",
     "home.title": "Restless",
     "home.tagline": "The perks of the past in the present",
@@ -149,7 +153,6 @@
     "home.find.title": "أين ومتى",
     "home.hoursShort": "كل يوم",
     "home.hoursRange": "8 صباحًا – منتصف الليل",
-
     "facts.address": "العنوان",
     "facts.hours": "المواعيد",
     "facts.telephone": "التليفون",
@@ -158,14 +161,12 @@
     "facts.parking": "ركن السيارات",
     "facts.addressLines": "شارع 232، متقاطع مع شارع 213<br>دجلة، المعادي، القاهرة",
     "facts.parkingTodo": "للاستكمال — سطر عن أماكن ركن السيارات، وأقرب علامة مميزة في دجلة تسهّل الوصول لشارع 232.",
-
     "menu.eyebrow": "المنيو",
     "menu.title": "ما نُقدّمه",
     "menu.loading": "جارٍ تحميل المنيو…",
     "menu.tabsAria": "قوائم الطعام",
     "menu.empty": "لا توجد أصناف في هذا القسم بعد.",
     "menu.failed": "تعذّر تحميل المنيو. برجاء الاتصال على {phone}.",
-
     "visit.eyebrow": "زورنا",
     "visit.title": "شارع 232، متقاطع مع شارع 213<br>دجلة، المعادي",
     "visit.hours.eyebrow": "مواعيد العمل",
@@ -173,10 +174,19 @@
     "visit.hours.note": "مفتوح سبعة أيام في الأسبوع، الجمعة أيضًا. المطبخ والمخبز يعملان طوال اليوم.",
     "visit.contact.eyebrow": "تواصل معنا",
     "visit.contact.title": "طرق التواصل",
-
     "notice.title": "قادم قريبًا",
     "notice.body": "الصور وقصة بداية Restless. الألوان والخطوط هنا مأخوذة من الشعار والمنيو المطبوع والمكان نفسه — والصور هي النصف الناقص.",
-
-    "foot.name": "Restless Coffee House & Bakery"
+    "foot.name": "Restless Coffee House & Bakery",
+    "order.add": "أضف {item}",
+    "order.increase": "أضف واحدًا آخر من {item}",
+    "order.decrease": "احذف واحدًا من {item}",
+    "order.title": "طلبك",
+    "order.itemOne": "صنف واحد",
+    "order.itemMany": "{n} أصناف",
+    "order.subtotal": "الإجمالي",
+    "order.beforeTax": "قبل خدمة 12% وضريبة القيمة المضافة.",
+    "order.send": "أرسل عبر واتساب",
+    "order.clear": "امسح الطلب",
+    "order.msgIntro": "أهلاً Restless، أحب أطلب:"
   }
 }

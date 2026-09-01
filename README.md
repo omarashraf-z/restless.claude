@@ -89,6 +89,22 @@ e.g. `201XXXXXXXXX`) and `whatsapp.enabled` to `true`. Every "Order on WhatsApp"
 across the site then opens a chat with the message pre-written. Until it's set, those
 buttons render disabled rather than broken.
 
+### The order builder
+
+Every priced item on the menu carries a quantity control. What the visitor picks
+collects into a bar at the foot of the page, and **Send on WhatsApp** opens a chat
+with the order written out — item, quantity, line total, subtotal, and a line
+saying the total is before service and VAT.
+
+Nothing is transmitted anywhere until they press send. The basket lives in their
+own browser (`localStorage`), survives moving between pages, and is stored with
+each item's name and price rather than a pointer into the menu — so editing a
+price later can never silently rewrite somebody's open basket.
+
+It needs no server, no payment provider and no monthly cost. It turns off on its
+own if `showPrices` is `false`, since an order with no prices is meaningless, and
+the send button disables itself if `whatsapp.enabled` is `false`.
+
 ### Change the wording, or the Arabic
 
 All interface text lives in `data/i18n.json`, in an `en` and an `ar` block with
@@ -169,7 +185,7 @@ the site doesn't read as contradicting itself.
 
 Still to build:
 
-- [ ] Cakes & catering page with the WhatsApp order flow
+- [ ] Cakes & catering page (whole cakes, party platters, office catering)
 - [ ] Our Story page
 - [ ] Real photography throughout, and an Open Graph image so shared links render as cards
 - [ ] A small CMS so staff can edit the menu without touching the repository
