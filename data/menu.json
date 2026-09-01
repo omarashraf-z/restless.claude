@@ -1,0 +1,47 @@
+{
+  "_about": "The whole menu lives here. Editing a price is a one-line change in this file — no HTML, no redeploy work. menu.html renders whatever is in `sections`.",
+
+  "_status": "PLACEHOLDER. Nothing below is Restless's real menu. The section names are a reasonable guess at the shape of a coffee house + bakery menu; the two sample items exist only to show the item format. Replace all of it with the real menu before this page goes public.",
+
+  "_itemFormat": {
+    "name": "required",
+    "description": "optional, one short line",
+    "price": "number, in EGP — or null to hide the price for that item",
+    "tags": "optional array: vegetarian | vegan | spicy | contains-nuts | signature",
+    "image": "optional filename inside assets/img/menu/"
+  },
+
+  "sections": [
+    {
+      "id": "coffee",
+      "name": "Coffee",
+      "note": "",
+      "items": [
+        {
+          "name": "SAMPLE — Flat White",
+          "description": "Delete this item. It is here to show the format only.",
+          "price": 0,
+          "tags": []
+        }
+      ]
+    },
+    {
+      "id": "breakfast",
+      "name": "Breakfast",
+      "note": "",
+      "items": [
+        {
+          "name": "SAMPLE — Item with no price shown",
+          "description": "Set price to null and no price is rendered for that item.",
+          "price": null,
+          "tags": ["vegetarian"]
+        }
+      ]
+    },
+    { "id": "pizza", "name": "Pizza", "note": "", "items": [] },
+    { "id": "pasta", "name": "Pasta", "note": "", "items": [] },
+    { "id": "bakery", "name": "Bakery", "note": "", "items": [] },
+    { "id": "cold", "name": "Cold Drinks", "note": "", "items": [] },
+    { "id": "desserts", "name": "Desserts", "note": "", "items": [] }
+  ]
+}

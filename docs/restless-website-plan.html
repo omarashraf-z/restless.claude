@@ -1,0 +1,575 @@
+<title>Restless Website Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap">
+
+<style>
+  :root {
+    --ground:      #ecefe7;
+    --surface:     #f7f9f3;
+    --surface-alt: #e2e7d9;
+    --line:        #c9d0bd;
+    --line-soft:   #d9dfcf;
+    --ink:         #1c2118;
+    --ink-mid:     #4c5344;
+    --ink-soft:    #6d7565;
+    --pistachio:   #55762e;
+    --pistachio-b: #7fa348;
+    --espresso:    #503420;
+    --flag:        #9a4b1c;
+
+    --f-display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+    --f-body:    "Newsreader", Georgia, "Times New Roman", serif;
+    --f-mono:    "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+    --measure: 68ch;
+    --gutter: 4.5rem;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:      #12150e;
+      --surface:     #1a1e14;
+      --surface-alt: #232818;
+      --line:        #39412c;
+      --line-soft:   #2a3020;
+      --ink:         #e9ecdf;
+      --ink-mid:     #b3bba5;
+      --ink-soft:    #8b937d;
+      --pistachio:   #a5c96e;
+      --pistachio-b: #86ab52;
+      --espresso:    #c9a887;
+      --flag:        #e0975f;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground:      #12150e;
+    --surface:     #1a1e14;
+    --surface-alt: #232818;
+    --line:        #39412c;
+    --line-soft:   #2a3020;
+    --ink:         #e9ecdf;
+    --ink-mid:     #b3bba5;
+    --ink-soft:    #8b937d;
+    --pistachio:   #a5c96e;
+    --pistachio-b: #86ab52;
+    --espresso:    #c9a887;
+    --flag:        #e0975f;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--f-body);
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    max-width: calc(var(--measure) + var(--gutter) + 3rem);
+    margin: 0 auto;
+    padding: 3.5rem 1.5rem 6rem;
+  }
+
+  /* ---- masthead ---- */
+
+  .masthead { border-bottom: 2px solid var(--ink); padding-bottom: 1.75rem; }
+
+  .kicker {
+    font-family: var(--f-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--pistachio);
+    margin: 0 0 1.25rem;
+  }
+
+  h1 {
+    font-family: var(--f-display);
+    font-weight: 700;
+    font-size: clamp(2.4rem, 7vw, 3.9rem);
+    line-height: 0.98;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+    margin: 0 0 0.9rem;
+  }
+
+  .standfirst {
+    font-size: 1.12rem;
+    color: var(--ink-mid);
+    max-width: 54ch;
+    margin: 0;
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.6rem;
+    font-family: var(--f-mono);
+    font-size: 0.74rem;
+    color: var(--ink-soft);
+    margin-top: 1.6rem;
+  }
+  .meta b { color: var(--ink-mid); font-weight: 500; }
+
+  /* ---- sections ---- */
+
+  section { margin-top: 3.5rem; }
+
+  .sec-head {
+    display: grid;
+    grid-template-columns: var(--gutter) 1fr;
+    align-items: baseline;
+    gap: 0 0;
+    border-top: 1px solid var(--line);
+    padding-top: 1rem;
+    margin-bottom: 1.4rem;
+  }
+
+  .sec-num {
+    font-family: var(--f-mono);
+    font-size: 0.72rem;
+    color: var(--pistachio);
+    letter-spacing: 0.08em;
+    padding-top: 0.45rem;
+  }
+
+  h2 {
+    font-family: var(--f-display);
+    font-weight: 700;
+    font-size: clamp(1.45rem, 3.4vw, 1.85rem);
+    letter-spacing: -0.018em;
+    line-height: 1.15;
+    text-wrap: balance;
+    margin: 0;
+  }
+
+  .body { padding-left: var(--gutter); }
+
+  h3 {
+    font-family: var(--f-display);
+    font-weight: 700;
+    font-size: 1.02rem;
+    letter-spacing: -0.005em;
+    margin: 2rem 0 0.5rem;
+  }
+
+  p { margin: 0 0 1rem; max-width: var(--measure); }
+  p:last-child { margin-bottom: 0; }
+
+  a { color: var(--pistachio); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  a:focus-visible { outline: 2px solid var(--pistachio-b); outline-offset: 3px; border-radius: 2px; }
+
+  strong { font-weight: 500; color: var(--ink); }
+  em { font-style: italic; }
+
+  ul { margin: 0 0 1rem; padding-left: 1.1rem; max-width: var(--measure); }
+  li { margin-bottom: 0.4rem; }
+  li::marker { color: var(--pistachio); }
+
+  .lede { font-size: 1.05rem; color: var(--ink-mid); }
+
+  /* ---- fact panel ---- */
+
+  .facts {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 1.4rem 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 1.2rem 2rem;
+    max-width: var(--measure);
+  }
+  .fact dt {
+    font-family: var(--f-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 0.3rem;
+  }
+  .fact dd { margin: 0; font-size: 0.95rem; line-height: 1.45; }
+  .fact dd span { display: block; font-variant-numeric: tabular-nums; }
+
+  .note {
+    border-left: 3px solid var(--flag);
+    background: var(--surface);
+    padding: 0.9rem 1.1rem;
+    margin: 1.25rem 0;
+    max-width: var(--measure);
+    font-size: 0.95rem;
+    color: var(--ink-mid);
+  }
+  .note b { color: var(--flag); font-family: var(--f-mono); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-bottom: 0.35rem; }
+
+  /* ---- ask list ---- */
+
+  .ask { list-style: none; padding: 0; max-width: var(--measure); }
+  .ask li {
+    display: grid;
+    grid-template-columns: 1.6rem 1fr;
+    gap: 0.75rem;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid var(--line-soft);
+    margin: 0;
+  }
+  .ask li::before {
+    content: "";
+    width: 0.95rem; height: 0.95rem;
+    border: 1.5px solid var(--pistachio);
+    margin-top: 0.35rem;
+  }
+  .ask .what { font-weight: 500; }
+  .ask .why { display: block; color: var(--ink-soft); font-size: 0.9rem; }
+
+  /* ---- sitemap ---- */
+
+  .pages { display: grid; gap: 0; max-width: var(--measure); }
+  .pg {
+    display: grid;
+    grid-template-columns: minmax(0, 12rem) 1fr;
+    gap: 0.35rem 1.5rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .pg:first-child { border-top: 1px solid var(--line); }
+  .pg-name {
+    font-family: var(--f-display);
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: -0.005em;
+  }
+  .pg-name .tag {
+    display: block;
+    font-family: var(--f-mono);
+    font-weight: 400;
+    font-size: 0.66rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    margin-top: 0.25rem;
+  }
+  .tag.core { color: var(--pistachio); }
+  .tag.later { color: var(--ink-soft); }
+  .pg-what { font-size: 0.95rem; color: var(--ink-mid); }
+  .pg-what b { color: var(--ink); font-weight: 500; }
+
+  /* ---- options table ---- */
+
+  .scroller { overflow-x: auto; max-width: var(--measure); }
+  table { border-collapse: collapse; width: 100%; min-width: 34rem; font-size: 0.92rem; }
+  th, td { text-align: left; padding: 0.7rem 1rem 0.7rem 0; border-bottom: 1px solid var(--line-soft); vertical-align: top; }
+  th {
+    font-family: var(--f-mono);
+    font-weight: 500;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    border-bottom: 1px solid var(--line);
+  }
+  td:first-child { font-weight: 500; padding-right: 1.5rem; }
+  tr.pick td { color: var(--ink); }
+  tr.pick td:first-child::after {
+    content: "recommended";
+    display: block;
+    font-family: var(--f-mono);
+    font-size: 0.64rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--pistachio);
+    font-weight: 400;
+    margin-top: 0.2rem;
+  }
+
+  /* ---- phases ---- */
+
+  .phases { display: grid; gap: 0; max-width: var(--measure); }
+  .ph {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    gap: 0 1.25rem;
+    padding: 1.15rem 0;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .ph:first-child { border-top: 1px solid var(--line); }
+  .ph-n {
+    font-family: var(--f-mono);
+    font-size: 0.85rem;
+    color: var(--pistachio);
+    font-variant-numeric: tabular-nums;
+    padding-top: 0.15rem;
+  }
+  .ph h3 { margin: 0 0 0.3rem; font-size: 1rem; }
+  .ph p { font-size: 0.95rem; color: var(--ink-mid); margin: 0; }
+  .ph .out {
+    font-family: var(--f-mono);
+    font-size: 0.72rem;
+    color: var(--ink-soft);
+    margin-top: 0.5rem;
+    display: block;
+  }
+  .ph .out b { color: var(--espresso); font-weight: 400; }
+
+  /* ---- questions ---- */
+
+  .q { max-width: var(--measure); }
+  .q li { margin-bottom: 0.7rem; }
+  .q li b { display: block; font-weight: 500; }
+  .q li span { color: var(--ink-soft); font-size: 0.92rem; }
+
+  footer {
+    margin-top: 4rem;
+    border-top: 2px solid var(--ink);
+    padding-top: 1.2rem;
+    font-family: var(--f-mono);
+    font-size: 0.72rem;
+    color: var(--ink-soft);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+  }
+
+  @media (max-width: 640px) {
+    :root { --gutter: 0rem; }
+    .sec-head { grid-template-columns: 1fr; gap: 0.3rem; }
+    .sec-num { padding-top: 0; }
+    .pg { grid-template-columns: 1fr; }
+    .body { padding-left: 0; }
+  }
+</style>
+
+<div class="page">
+
+  <header class="masthead">
+    <p class="kicker">Website plan · Restless Coffee House &amp; Bakery</p>
+    <h1>Restless, on the open web</h1>
+    <p class="standfirst">A menu people can actually read on their phone, a cake order that lands in your WhatsApp, and a Maadi address Google can find. Here's what we build and in what order.</p>
+    <div class="meta">
+      <span><b>Prepared</b> 31 Aug 2026</span>
+      <span><b>Client</b> Restless Coffee House &amp; Bakery, Degla, Maadi</span>
+      <span><b>Status</b> Draft — awaiting brand assets</span>
+    </div>
+  </header>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">A</span><h2>What I could confirm</h2></div>
+    <div class="body">
+      <p class="lede">The Facebook page itself is blocked from this environment, so everything below comes from public listings rather than from your page.</p>
+
+      <dl class="facts">
+        <div class="fact">
+          <dt>Address</dt>
+          <dd>232 St., cross 213 St.<br>Degla, Maadi, Cairo</dd>
+        </div>
+        <div class="fact">
+          <dt>Phone</dt>
+          <dd>
+            <span>02 2517 1359</span>
+            <span>02 2517 0598</span>
+            <span>02 2517 0487</span>
+          </dd>
+        </div>
+        <div class="fact">
+          <dt>Format</dt>
+          <dd>Coffee house + bakery with a full kitchen — breakfast, pasta, Neapolitan pizza, cheesecake</dd>
+        </div>
+        <div class="fact">
+          <dt>Existing presence</dt>
+          <dd>Facebook (~5.2k likes), elmenus listing, Snapchat place, scattered TikTok reviews</dd>
+        </div>
+      </dl>
+
+      <div class="note">
+        <b>Blocked</b>
+        Facebook, Instagram, elmenus, Cairo 360 and Snapchat are all refused by this session's network proxy. That means I have <em>no</em> logo, colour palette, photography, real menu, or opening hours yet. Everything from section C on is structure and strategy — the visual identity waits on section B.
+      </div>
+
+      <p>One thing worth naming early: nobody currently owns the Restless story online. The listings describe the place in one flat line, the photos are customer phone shots, and the menu lives on an aggregator that takes a cut and outranks you. A site fixes all three at once.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">B</span><h2>What I need from you</h2></div>
+    <div class="body">
+      <p>Send these and I can go from plan to a real page quickly. Screenshots and phone photos are fine — I'd rather have rough material now than polished material in three weeks.</p>
+
+      <ul class="ask">
+        <li><span><span class="what">The logo</span><span class="why">Any format — PNG, PDF, the printed menu cover. The whole palette gets derived from it.</span></span></li>
+        <li><span><span class="what">The menu, with prices</span><span class="why">Photos of the physical menu are enough. Tell me whether prices go public or stay off the site.</span></span></li>
+        <li><span><span class="what">Opening hours</span><span class="why">Including Friday and Ramadan variations, if they differ.</span></span></li>
+        <li><span><span class="what">10–15 photos</span><span class="why">Interior, the counter, coffee, the bakery case, three or four hero dishes. Highest resolution you have.</span></span></li>
+        <li><span><span class="what">The WhatsApp number for orders</span><span class="why">And whether it's the same line as the landline numbers above.</span></span></li>
+        <li><span><span class="what">Delivery links</span><span class="why">Talabat, elmenus, Instashop — whichever are live, so we send people to them instead of losing them.</span></span></li>
+        <li><span><span class="what">Language call</span><span class="why">English only, Arabic only, or both. This one changes the build, so it's the earliest decision.</span></span></li>
+        <li><span><span class="what">Do they own a domain?</span><span class="why">If not, I'd grab <span style="font-family:var(--f-mono);font-size:0.88em">restlesscoffee.com</span> or a <span style="font-family:var(--f-mono);font-size:0.88em">.eg</span> equivalent before someone else does.</span></span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">C</span><h2>The site, page by page</h2></div>
+    <div class="body">
+      <p>Small footprint on purpose. A café site fails by having twelve pages nobody maintains, not by having five that stay current.</p>
+
+      <div class="pages">
+        <div class="pg">
+          <div class="pg-name">Home<span class="tag core">core</span></div>
+          <div class="pg-what">One strong photo, the line that says what Restless is, and — above the fold on a phone — <b>hours, address, call, WhatsApp, directions</b>. A live "open now / opens at 9" indicator computed from the hours data. Below that: three signature items, a short strip of the room, and the map.</div>
+        </div>
+        <div class="pg">
+          <div class="pg-name">Menu<span class="tag core">core</span></div>
+          <div class="pg-what">The page that earns the whole project. Sections that jump-link (Coffee, Breakfast, Pizza, Pasta, Bakery, Cold Drinks), photos on the items that deserve them, prices in EGP, and tags for vegetarian and spicy. Built from <b>one data file</b> so a price change is a one-line edit, never a redesign.</div>
+        </div>
+        <div class="pg">
+          <div class="pg-name">Cakes &amp; Catering<span class="tag core">core</span></div>
+          <div class="pg-what">Where a bakery makes real money. Whole cakes, gateaux, party platters and office catering, with a short enquiry form that <b>composes a pre-filled WhatsApp message</b> — occasion, date, size, flavour, phone — rather than sending an email nobody checks.</div>
+        </div>
+        <div class="pg">
+          <div class="pg-name">Visit<span class="tag core">core</span></div>
+          <div class="pg-what">Full hours table, embedded map with an "open in Google Maps" button, parking and the Degla landmark that actually helps people find 232 St., all three phone lines, and the delivery-app links.</div>
+        </div>
+        <div class="pg">
+          <div class="pg-name">Our Story<span class="tag core">core</span></div>
+          <div class="pg-what">Who started it, when, why Maadi, what's baked in-house each morning. Short — 250 words and three good photos beats a page of history.</div>
+        </div>
+        <div class="pg">
+          <div class="pg-name">Gallery<span class="tag later">phase two</span></div>
+          <div class="pg-what">Only worth a page once there's proper photography. Until then the photos live inside the pages above.</div>
+        </div>
+        <div class="pg">
+          <div class="pg-name">Private events<span class="tag later">phase two</span></div>
+          <div class="pg-what">Book the space for birthdays and work meetings. Add it if that's a business line you want to grow.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">D</span><h2>Decisions that matter here</h2></div>
+    <div class="body">
+      <p>Cairo-specific things that are easy to get wrong and expensive to retrofit.</p>
+
+      <h3>WhatsApp is the contact form</h3>
+      <p>Almost nobody in Egypt fills out a web form and waits for an email. Every call-to-action on the site should open WhatsApp with the message already written. Contact forms stay as a fallback, not the main path.</p>
+
+      <h3>Build it phone-first, and build it light</h3>
+      <p>Nearly all traffic will arrive from a link in the Instagram or Facebook bio, on mobile data. The site should be a static page that loads fast on a weak connection — compressed images, no heavy frameworks, no cookie banner theatre.</p>
+
+      <h3>Arabic decides the architecture</h3>
+      <p>If the site is bilingual, that's a real RTL layout and two copies of the menu data — not a translate widget. It roughly doubles the content work but the build handles it cleanly if we plan for it from the first commit. Deciding this late is what makes it painful.</p>
+
+      <h3>Be findable</h3>
+      <p><strong>Schema.org markup</strong> for a restaurant (hours, address, menu, price range) so Google can show hours and directions directly in search. Alongside that: a claimed and filled-in Google Business Profile, and proper Open Graph images so a shared link renders as a card instead of a bare URL.</p>
+
+      <h3>The menu has to be editable without me</h3>
+      <p>Prices in Egypt move. If updating a price requires a developer, the site is stale within a season and the whole thing quietly dies. Whichever build option we pick below, someone at Restless must be able to change a price in under a minute.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">E</span><h2>How to build it</h2></div>
+    <div class="body">
+      <div class="scroller">
+        <table>
+          <thead>
+            <tr><th>Approach</th><th>Who edits the menu</th><th>Running cost</th><th>Trade-off</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Hand-built static site</td>
+              <td>Me, via a JSON file</td>
+              <td>Domain only, ~$12/yr</td>
+              <td>Fastest to ship and the cheapest to run, but you depend on me for every price change.</td>
+            </tr>
+            <tr class="pick">
+              <td>Static site + small CMS</td>
+              <td>Anyone, in a browser login</td>
+              <td>Domain only, ~$12/yr</td>
+              <td>A day or two more work up front. The staff edit menu, hours and photos themselves, forever. Hosting stays free on Cloudflare Pages or Netlify.</td>
+            </tr>
+            <tr>
+              <td>WordPress + a café theme</td>
+              <td>Anyone, in wp-admin</td>
+              <td>~$60–150/yr hosting</td>
+              <td>Familiar, but slow on mobile, needs security updates, and the theme will fight you on Arabic. Not what I'd choose for a five-page site.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p style="margin-top:1.25rem">The middle row is my recommendation: a static site with a lightweight editor bolted on. It gives the speed of the first option and the independence of the third, and the hosting genuinely costs nothing at this traffic level — the only recurring bill is the domain.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">F</span><h2>Order of work</h2></div>
+    <div class="body">
+      <div class="phases">
+        <div class="ph">
+          <span class="ph-n">01</span>
+          <div>
+            <h3>Identity from their material</h3>
+            <p>Pull the palette and type from the logo and the room. Build a small set of design tokens and one styled page so we're arguing about a real screen, not adjectives.</p>
+            <span class="out">Deliverable · <b>Home page, desktop and mobile, real content</b></span>
+          </div>
+        </div>
+        <div class="ph">
+          <span class="ph-n">02</span>
+          <div>
+            <h3>Menu system</h3>
+            <p>Model the menu as data, then build the page on top of it — sections, jump links, photos, dietary tags, EGP prices.</p>
+            <span class="out">Deliverable · <b>Full menu, editable from one file</b></span>
+          </div>
+        </div>
+        <div class="ph">
+          <span class="ph-n">03</span>
+          <div>
+            <h3>The rest of the pages</h3>
+            <p>Cakes &amp; catering with the WhatsApp order flow, Visit with map and hours, Our Story. Wire every call-to-action.</p>
+            <span class="out">Deliverable · <b>Complete site, staging URL you can share</b></span>
+          </div>
+        </div>
+        <div class="ph">
+          <span class="ph-n">04</span>
+          <div>
+            <h3>Findability and polish</h3>
+            <p>Schema markup, Open Graph cards, image compression, accessibility pass, Arabic layout if we're doing it, and a check on a real phone over mobile data.</p>
+            <span class="out">Deliverable · <b>Google Business Profile updated, site indexed</b></span>
+          </div>
+        </div>
+        <div class="ph">
+          <span class="ph-n">05</span>
+          <div>
+            <h3>Hand over</h3>
+            <p>Point the domain, connect the editor, and write a one-page guide for changing a price, a photo, or the hours.</p>
+            <span class="out">Deliverable · <b>Live site, staff able to maintain it</b></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">G</span><h2>Open questions</h2></div>
+    <div class="body">
+      <ul class="q">
+        <li><b>English, Arabic, or both?</b><span>The one answer that changes the build rather than the content. Worth settling first.</span></li>
+        <li><b>Do prices go on the site?</b><span>Some Cairo cafés keep them off to avoid reprinting. I'd publish them — it's the single most searched-for thing.</span></li>
+        <li><b>Should the site take orders itself, or hand off to the delivery apps?</b><span>Hand off, for now. Building checkout and payments is a different project; linking to Talabat and elmenus costs nothing and works today.</span></li>
+        <li><b>Is there more than one branch, or plans for one?</b><span>Changes how the Visit page and the address markup are structured.</span></li>
+        <li><b>Who at Restless will own the site after launch?</b><span>A site with no owner goes stale in a season. Name the person before we launch, not after.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    <span>Restless Coffee House &amp; Bakery — website plan</span>
+    <span>Draft 1 · 31 Aug 2026</span>
+    <span>Facts from public listings; brand direction pending</span>
+  </footer>
+
+</div>

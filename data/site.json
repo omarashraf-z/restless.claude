@@ -1,0 +1,54 @@
+{
+  "_about": "Single source of truth for business details. Every page reads from this file. Fields marked TODO are unconfirmed — replace them before launch.",
+
+  "name": "Restless Coffee House & Bakery",
+  "shortName": "Restless",
+  "tagline": "TODO — one line describing Restless, in the owner's own words",
+  "description": "TODO — two or three sentences for the home page and for search results",
+
+  "address": {
+    "street": "232 St., cross 213 St.",
+    "district": "Degla, Maadi",
+    "city": "Cairo",
+    "country": "EG",
+    "_confirmed": true,
+    "mapsQuery": "Restless Coffee House & Bakery, 232 St, Degla, Maadi, Cairo"
+  },
+
+  "phones": ["+20225171359", "+20225170598", "+20225170487"],
+  "_phones_confirmed": true,
+
+  "whatsapp": {
+    "number": "TODO — full international format, digits only, e.g. 201XXXXXXXXX",
+    "enabled": false
+  },
+
+  "email": "TODO",
+
+  "hours": {
+    "_note": "TODO — all seven days unconfirmed. 24-hour times. Set closed:true for a day off. Add ramadan overrides later if hours change.",
+    "_confirmed": false,
+    "sun": { "open": "09:00", "close": "01:00" },
+    "mon": { "open": "09:00", "close": "01:00" },
+    "tue": { "open": "09:00", "close": "01:00" },
+    "wed": { "open": "09:00", "close": "01:00" },
+    "thu": { "open": "09:00", "close": "02:00" },
+    "fri": { "open": "09:00", "close": "02:00" },
+    "sat": { "open": "09:00", "close": "01:00" }
+  },
+
+  "delivery": {
+    "_note": "TODO — confirm which of these are live and paste the real URLs.",
+    "talabat": null,
+    "elmenus": "https://www.elmenus.com/cairo/restless-coffee-house-bakery-2lng3",
+    "instashop": null
+  },
+
+  "social": {
+    "facebook": "https://www.facebook.com/restless.coffeehouse/",
+    "instagram": "TODO"
+  },
+
+  "currency": "EGP",
+  "showPrices": true
+}
