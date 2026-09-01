@@ -2,9 +2,24 @@
 
 The website for Restless Coffee House & Bakery, 232 St. cross 213 St., Degla, Maadi, Cairo.
 
-**Status: working skeleton.** The structure, menu system and opening-hours logic all work.
-What's missing is Restless's own material — logo, photography, the real menu, confirmed
-hours. See [Outstanding](#outstanding) below.
+**Status: real content, no photography.** The full menu (254 items), the real opening
+hours and the brand's own palette are all in. What's missing is imagery — the logo file
+and photographs. See [Outstanding](#outstanding) below.
+
+## The look
+
+The palette and typography are taken from the brand's own material rather than invented:
+
+| Token | Source |
+|---|---|
+| `--sepia` | the textured brown ring of the badge logo |
+| `--chalk` / `--script` | the pencil-blue disc behind the illustration, and the brush script the printed menu uses for "The Pasta", "The Pizza" |
+| `--paper` | the aged cream stock the printed menu is set on |
+| `--red` | the callouts and "new" flashes on the printed menu |
+
+Type is Archivo (headings, item names, UI), Crimson Pro (running prose) and Yellowtail
+(the menu's section titles, echoing the printed script). Menu items use dotted leaders
+between name and price, the way the printed menu sets them.
 
 ---
 
@@ -101,15 +116,24 @@ root to GitHub Pages. Enable it once, under **Settings → Pages → Source: Git
 
 Needed from Restless before the site can go public:
 
-- [ ] Logo, in any format — the palette and typography get derived from it
-- [ ] The real menu with prices (photos of the printed menu are fine)
-- [ ] Confirmed opening hours, including Friday and any Ramadan difference
+- [ ] **The real WhatsApp number.** `data/site.json` currently carries a placeholder that
+      is publicly visible and receives every order button's message.
+- [ ] **The logo file**, saved as `assets/img/logo.png`. Every page picks it up
+      automatically; until then they show a typographic stand-in.
 - [ ] 10–15 photos: interior, counter, coffee, the bakery case, signature dishes
-- [ ] WhatsApp number for orders
+- [ ] The Our Story copy — who started Restless, when, and why Maadi
+- [ ] Parking / landmark line for the Visit page
 - [ ] Live delivery links (Talabat, Instashop — elmenus is already in)
 - [ ] Language decision: English, Arabic, or both (bilingual is an architecture decision,
       not a content one — worth settling early)
 - [ ] A domain
+
+Three things to fix on the printed menu, corrected on the site:
+
+- The breakfast omelette page reads "RISTLESS OMELETTE"
+- The coffee page reads "Café Latte 16oz (Truple Shot)"
+- Cheese Croissant is 109.99 under Baked Goods and 149.99 as a croissant sandwich —
+  presumably plain-baked versus made up, but confirm so the site doesn't look wrong
 
 Still to build:
 

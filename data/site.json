@@ -19,11 +19,16 @@
   "_phones_confirmed": true,
 
   "whatsapp": {
-    "number": "TODO — full international format, digits only, e.g. 201XXXXXXXXX",
-    "enabled": false
+    "_note": "PLACEHOLDER NUMBER, supplied to stand in until the café's real ordering line is confirmed. It is publicly visible and every order button opens a chat with it — replace before this site is promoted anywhere.",
+    "_confirmed": false,
+    "number": "201121937248",
+    "enabled": true
   },
 
   "email": "TODO",
+
+  "logo": "assets/img/logo.png",
+  "_logo_note": "Drop the badge logo in at this path and every page picks it up automatically. Until the file exists, pages fall back to a typographic mark.",
 
   "hours": {
     "_note": "Open 8am to midnight, every day. 24-hour times; a close earlier than the open means the shift runs past midnight. Set closed:true for a day off. Add Ramadan overrides here if the hours change.",

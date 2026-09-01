@@ -4,22 +4,27 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Menu — Restless Coffee House &amp; Bakery</title>
-<meta name="description" content="The full menu at Restless Coffee House &amp; Bakery, Degla, Maadi — coffee, breakfast, pizza, pasta and bakery.">
+<meta name="description" content="The full menu at Restless, Degla Maadi — breakfast, coffee, pizza, pasta, burgers, salads, sandwiches and bakery, with prices in EGP.">
 <meta name="color-scheme" content="light dark">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Menu — Restless Coffee House &amp; Bakery">
+<meta property="og:description" content="Breakfast, coffee, pizza, pasta and bakery. Degla, Maadi.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Instrument+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Yellowtail&display=swap">
 <link rel="stylesheet" href="assets/css/site.css">
 </head>
 
 <body>
-<a class="skip" href="#main">Skip to content</a>
+<a class="skip" href="#menu">Skip to the menu</a>
 
 <header class="site-head">
   <div class="wrap">
     <a class="brand" href="index.html">
-      <span>Restless<small>Coffee House &amp; Bakery</small></span>
+      <span class="brand-mark brand-mark--fallback" data-brand-mark aria-hidden="true">R</span>
+      <span class="brand-name">Restless<small>Coffee House &amp; Bakery</small></span>
     </a>
     <nav class="nav" aria-label="Primary">
       <a href="index.html">Home</a>
@@ -29,25 +34,23 @@
   </div>
 </header>
 
-<main id="main">
-  <section class="hero wrap">
+<main>
+  <section class="page-head wrap">
     <p class="eyebrow">Menu</p>
-    <h1>What we're serving</h1>
-    <p><span class="status" data-status hidden>Checking hours…</span></p>
+    <h1>What we&rsquo;re serving</h1>
+    <p style="margin-top:1rem"><span class="status" data-status hidden>Checking hours…</span></p>
 
     <ul class="actions">
       <li><a class="btn btn--primary" data-whatsapp="Hi Restless, I'd like to place an order." href="#">Order on WhatsApp</a></li>
-      <li><a class="btn" data-tel href="#">Call the café</a></li>
+      <li><a class="btn" data-tel href="#">Call us</a></li>
     </ul>
-
-    <div class="notice">
-      <b>Placeholder menu</b>
-      <p>The items below are samples showing the format, not Restless's real menu. The whole menu lives in <code>data/menu.json</code> — replace it there and this page rebuilds itself.</p>
-    </div>
   </section>
 
-  <section class="section wrap">
-    <ul class="menu-nav" data-menu-nav></ul>
+  <section class="wrap" id="menu">
+    <div role="tablist" aria-label="Menus" class="menu-tabs" data-menu-tabs></div>
+    <p class="menu-note" data-menu-note hidden></p>
+    <ul class="menu-jump" data-menu-jump></ul>
+
     <div data-menu>
       <p class="empty">Loading the menu…</p>
     </div>
@@ -64,9 +67,12 @@
     <div>
       <a href="index.html">Home</a><br>
       <a href="visit.html">Visit</a><br>
+      <a href="https://www.instagram.com/restless.coffeehouse/" target="_blank" rel="noopener">Instagram</a><br>
       <a href="https://www.facebook.com/restless.coffeehouse/" target="_blank" rel="noopener">Facebook</a>
     </div>
-    <div class="colophon">Prices in EGP · subject to change</div>
+    <div>
+      <span class="script">The perks of the past<br>in the present</span>
+    </div>
   </div>
 </footer>
 

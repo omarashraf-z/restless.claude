@@ -1,12 +1,10 @@
 /* Restless — shared page script.
  *
- * Everything here is driven by the two JSON files in /data. No page hardcodes
- * hours, phone numbers or menu items, so updating the site means editing data,
- * not markup.
+ * Driven entirely by the two files in /data. No page hardcodes hours, phone
+ * numbers or menu items.
  *
- * Note: these files are loaded with fetch(), which browsers block on file://
- * URLs. Open the site through a local server (see README) rather than by
- * double-clicking the HTML.
+ * These files load with fetch(), which browsers block on file:// URLs. Open the
+ * site through a local server (see README), not by double-clicking the HTML.
  */
 
 const DAY_KEYS = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
@@ -15,11 +13,17 @@ const DAY_NAMES = {
   thu: 'Thursday', fri: 'Friday', sat: 'Saturday'
 };
 
-/* Cairo is UTC+2 with no daylight saving as of 2026's schedule for most of the
- * year; rather than guess, we read the visitor's own clock and only claim
- * "open now" when their timezone is Egypt's. Everyone else sees the hours
- * table without a live claim, which is the honest answer. */
+/* Hours are Cairo's, so read the clock in Cairo's zone rather than the
+ * visitor's — someone checking from London still needs to know whether the
+ * café is open now, in Maadi. */
 const CAIRO_TZ = 'Africa/Cairo';
+
+const el = (tag, className, text) => {
+  const node = document.createElement(tag);
+  if (className) node.className = className;
+  if (text != null) node.textContent = text;
+  return node;
+};
 
 async function loadJSON(path) {
   const res = await fetch(path, { cache: 'no-cache' });
@@ -27,10 +31,7 @@ async function loadJSON(path) {
   return res.json();
 }
 
-function base() {
-  // Works both at a domain root and under a /repo-name/ GitHub Pages path.
-  return document.documentElement.dataset.base || '';
-}
+const base = () => document.documentElement.dataset.base || '';
 
 /* -- hours ---------------------------------------------------------------- */
 
@@ -45,198 +46,247 @@ function nowInCairo() {
   };
 }
 
-function toMinutes(hhmm) {
+const toMinutes = (hhmm) => {
   const [h, m] = String(hhmm).split(':').map(Number);
   return h * 60 + m;
-}
+};
 
 function fmtTime(hhmm) {
   const [h, m] = String(hhmm).split(':').map(Number);
+  if (h === 0 && m === 0) return 'midnight';
   const suffix = h >= 12 ? 'pm' : 'am';
   const hour12 = h % 12 === 0 ? 12 : h % 12;
   return m === 0 ? `${hour12}${suffix}` : `${hour12}:${String(m).padStart(2, '0')}${suffix}`;
 }
 
-/* A closing time earlier than the opening time means the shift runs past
- * midnight — 9am to 1am. Yesterday's late shift can still be running now. */
+/* A close time at or before the open means the shift runs past midnight —
+ * 8am to 12am. Yesterday's late shift can still be running right now. */
 function openState(hours) {
   const { day, minutes } = nowInCairo();
   const todayIdx = DAY_KEYS.indexOf(day);
   if (todayIdx < 0) return null;
 
-  const check = (idx, offset) => {
+  const running = (idx, offset) => {
     const slot = hours[DAY_KEYS[idx]];
     if (!slot || slot.closed) return null;
     const open = toMinutes(slot.open);
-    const close = toMinutes(slot.close) + (toMinutes(slot.close) <= open ? 1440 : 0);
+    const rawClose = toMinutes(slot.close);
+    const close = rawClose <= open ? rawClose + 1440 : rawClose;
     const t = minutes + offset;
     return t >= open && t < close ? slot : null;
   };
 
-  const yesterdayIdx = (todayIdx + 6) % 7;
-  const running = check(todayIdx, 0) || check(yesterdayIdx, 1440);
-  if (running) return { open: true, until: running.close };
+  const live = running(todayIdx, 0) || running((todayIdx + 6) % 7, 1440);
+  if (live) return { open: true, until: live.close };
 
   const today = hours[DAY_KEYS[todayIdx]];
   if (today && !today.closed && minutes < toMinutes(today.open)) {
     return { open: false, next: today.open, nextDay: 'today' };
   }
   for (let i = 1; i <= 7; i++) {
-    const slot = hours[DAY_KEYS[(todayIdx + i) % 7]];
+    const idx = (todayIdx + i) % 7;
+    const slot = hours[DAY_KEYS[idx]];
     if (slot && !slot.closed) {
-      return { open: false, next: slot.open, nextDay: i === 1 ? 'tomorrow' : DAY_NAMES[DAY_KEYS[(todayIdx + i) % 7]] };
+      return { open: false, next: slot.open, nextDay: i === 1 ? 'tomorrow' : DAY_NAMES[DAY_KEYS[idx]] };
     }
   }
   return null;
 }
 
-function renderStatus(el, site) {
+function renderStatus(node, site) {
+  node.hidden = false;
+
   if (site.hours._confirmed === false) {
-    el.textContent = 'Hours to be confirmed';
-    el.removeAttribute('data-open');
+    node.textContent = 'Hours to be confirmed';
+    node.removeAttribute('data-open');
     return;
   }
-  const visitorTZ = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  const state = openState(site.hours);
-  if (!state) { el.hidden = true; return; }
 
-  el.dataset.open = String(state.open);
-  if (state.open) {
-    el.textContent = `Open now · until ${fmtTime(state.until)}`;
-  } else {
-    el.textContent = `Closed · opens ${state.nextDay === 'today' ? '' : state.nextDay + ' '}${fmtTime(state.next)}`.replace('  ', ' ');
+  const state = openState(site.hours);
+  if (!state) { node.hidden = true; return; }
+
+  node.dataset.open = String(state.open);
+  node.textContent = state.open
+    ? `Open now · until ${fmtTime(state.until)}`
+    : `Closed · opens ${state.nextDay === 'today' ? '' : state.nextDay + ' '}${fmtTime(state.next)}`;
+
+  if (Intl.DateTimeFormat().resolvedOptions().timeZone !== CAIRO_TZ) {
+    node.title = 'Cairo time';
   }
-  if (visitorTZ !== CAIRO_TZ) el.title = 'Cairo time';
 }
 
 function renderHours(table, site) {
   const { day } = nowInCairo();
-  table.innerHTML = '';
-  const body = document.createElement('tbody');
+  const body = el('tbody');
+
   for (const key of DAY_KEYS) {
     const slot = site.hours[key];
-    const row = document.createElement('tr');
+    const row = el('tr');
     if (key === day) row.dataset.today = 'true';
-    const th = document.createElement('th');
+
+    const th = el('th', null, DAY_NAMES[key]);
     th.scope = 'row';
-    th.textContent = DAY_NAMES[key];
-    const td = document.createElement('td');
-    td.textContent = !slot || slot.closed ? 'Closed' : `${fmtTime(slot.open)} – ${fmtTime(slot.close)}`;
+    const td = el('td', null,
+      !slot || slot.closed ? 'Closed' : `${fmtTime(slot.open)} – ${fmtTime(slot.close)}`);
+
     row.append(th, td);
     body.append(row);
   }
-  table.append(body);
+
+  table.replaceChildren(body);
+}
+
+/* -- brand mark ----------------------------------------------------------- */
+
+/* The logo file may not be in the repo yet. Try to load it; if it isn't there,
+ * leave the typographic stand-in in place. Adding assets/img/logo.png later
+ * makes every page pick it up with no code change. */
+function loadBrandMark(site) {
+  const slots = document.querySelectorAll('[data-brand-mark]');
+  if (!slots.length || !site.logo) return;
+
+  const probe = new Image();
+  probe.onload = () => {
+    for (const slot of slots) {
+      const img = el('img', 'brand-mark');
+      img.src = base() + site.logo;
+      img.alt = `${site.name} logo`;
+      img.width = 42;
+      img.height = 42;
+      slot.replaceWith(img);
+    }
+  };
+  probe.src = base() + site.logo;
 }
 
 /* -- contact links -------------------------------------------------------- */
 
 function wireContacts(site) {
-  document.querySelectorAll('[data-maps]').forEach((el) => {
-    el.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.address.mapsQuery)}`;
-  });
+  for (const node of document.querySelectorAll('[data-maps]')) {
+    node.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.address.mapsQuery)}`;
+  }
 
-  document.querySelectorAll('[data-tel]').forEach((el) => {
-    el.href = `tel:${site.phones[0]}`;
-  });
+  for (const node of document.querySelectorAll('[data-tel]')) {
+    node.href = `tel:${site.phones[0]}`;
+  }
 
-  document.querySelectorAll('[data-whatsapp]').forEach((el) => {
+  for (const node of document.querySelectorAll('[data-whatsapp]')) {
     if (!site.whatsapp.enabled) {
-      el.setAttribute('aria-disabled', 'true');
-      el.title = 'WhatsApp number not set yet — add it in data/site.json';
-      el.removeAttribute('href');
-      return;
+      node.setAttribute('aria-disabled', 'true');
+      node.title = 'WhatsApp number not set yet — add it in data/site.json';
+      node.removeAttribute('href');
+      continue;
     }
-    const message = el.dataset.whatsapp || `Hi ${site.shortName}, I'd like to place an order.`;
-    el.href = `https://wa.me/${site.whatsapp.number}?text=${encodeURIComponent(message)}`;
-  });
+    const message = node.dataset.whatsapp || `Hi ${site.shortName}, I'd like to place an order.`;
+    node.href = `https://wa.me/${site.whatsapp.number}?text=${encodeURIComponent(message)}`;
+  }
 }
 
 /* -- menu ----------------------------------------------------------------- */
 
-function renderMenu(root, menu, site) {
-  const nav = document.querySelector('[data-menu-nav]');
-  const money = new Intl.NumberFormat('en-EG', { maximumFractionDigits: 0 });
+function buildItem(item, menu, site) {
+  const li = el('li', 'menu-item');
+  const line = el('div', 'menu-item-line');
 
-  root.innerHTML = '';
-  if (nav) nav.innerHTML = '';
+  const name = el('span', 'menu-item-name', item.name);
+  if (item.badge) name.append(el('span', 'badge', item.badge));
+  line.append(name);
 
-  for (const section of menu.sections) {
-    if (nav) {
-      const li = document.createElement('li');
-      const a = document.createElement('a');
-      a.href = `#${section.id}`;
-      a.textContent = section.name;
-      li.append(a);
-      nav.append(li);
+  const showPrice = site.showPrices && item.price != null;
+  if (showPrice) {
+    line.append(el('span', 'menu-leader'));
+    line.append(el('span', 'menu-price',
+      `${new Intl.NumberFormat('en-EG', { minimumFractionDigits: 2 }).format(item.price)} ${menu.currency}`));
+  }
+
+  li.append(line);
+  if (item.description) li.append(el('p', 'desc', item.description));
+  return li;
+}
+
+function buildSection(section, menu, site) {
+  const wrap = el('section', 'menu-section');
+  wrap.id = section.id;
+
+  wrap.append(el('h2', 'script', section.name));
+  wrap.append(el('hr', 'rule'));
+  if (section.note) wrap.append(el('p', 'note', section.note));
+
+  const addList = (items) => {
+    const list = el('ul', 'menu-items');
+    for (const item of items) list.append(buildItem(item, menu, site));
+    wrap.append(list);
+  };
+
+  if (section.groups?.length) {
+    for (const group of section.groups) {
+      wrap.append(el('h3', 'menu-group', group.name));
+      addList(group.items);
     }
+  } else if (section.items?.length) {
+    addList(section.items);
+  } else {
+    wrap.append(el('p', 'empty', 'Nothing added to this section yet.'));
+  }
 
-    const wrap = document.createElement('section');
-    wrap.className = 'menu-section';
-    wrap.id = section.id;
-
-    const h2 = document.createElement('h2');
-    h2.textContent = section.name;
-    wrap.append(h2);
-
-    if (section.note) {
-      const note = document.createElement('p');
-      note.className = 'note';
-      note.textContent = section.note;
-      wrap.append(note);
-    }
-
-    if (!section.items.length) {
-      const empty = document.createElement('p');
-      empty.className = 'empty';
-      empty.textContent = 'Nothing added to this section yet.';
-      wrap.append(empty);
-      root.append(wrap);
-      continue;
-    }
-
-    const list = document.createElement('ul');
-    list.className = 'menu-items';
-
-    for (const item of section.items) {
-      const li = document.createElement('li');
-      li.className = 'menu-item';
-
-      const h3 = document.createElement('h3');
-      h3.textContent = item.name;
-      li.append(h3);
-
-      if (site.showPrices && item.price !== null && item.price !== undefined) {
-        const price = document.createElement('span');
-        price.className = 'price';
-        price.textContent = `${money.format(item.price)} ${site.currency}`;
-        li.append(price);
-      }
-
-      if (item.description) {
-        const desc = document.createElement('p');
-        desc.className = 'desc';
-        desc.textContent = item.description;
-        li.append(desc);
-      }
-
-      if (item.tags?.length) {
-        const tags = document.createElement('div');
-        tags.className = 'tags';
-        for (const tag of item.tags) {
-          const span = document.createElement('span');
-          span.className = 'tag';
-          span.textContent = tag.replace(/-/g, ' ');
-          tags.append(span);
-        }
-        li.append(tags);
-      }
-
+  if (section.addons?.length) {
+    const list = el('ul', 'addons');
+    for (const addon of section.addons) {
+      const li = el('li');
+      li.append(document.createTextNode(addon.name + ' '));
+      li.append(el('b', null, `+${addon.price.toFixed(2)} ${menu.currency}`));
       list.append(li);
     }
-
     wrap.append(list);
-    root.append(wrap);
   }
+
+  return wrap;
+}
+
+function renderMenu(root, menu, site) {
+  const tabsHost = document.querySelector('[data-menu-tabs]');
+  const jumpHost = document.querySelector('[data-menu-jump]');
+  const noteHost = document.querySelector('[data-menu-note]');
+
+  const show = (index) => {
+    const active = menu.menus[index];
+
+    for (const [i, button] of [...(tabsHost?.children ?? [])].entries()) {
+      button.setAttribute('aria-selected', String(i === index));
+    }
+
+    if (noteHost) {
+      noteHost.textContent = active.note || '';
+      noteHost.hidden = !active.note;
+    }
+
+    if (jumpHost) {
+      jumpHost.replaceChildren(...active.sections.map((section) => {
+        const li = el('li');
+        const a = el('a', null, section.name);
+        a.href = `#${section.id}`;
+        li.append(a);
+        return li;
+      }));
+    }
+
+    root.replaceChildren(...active.sections.map((s) => buildSection(s, menu, site)));
+
+    if (menu.notice) root.append(el('p', 'menu-legal', menu.notice));
+  };
+
+  if (tabsHost) {
+    tabsHost.replaceChildren(...menu.menus.map((sub, i) => {
+      const button = el('button', null, sub.name);
+      button.type = 'button';
+      button.setAttribute('role', 'tab');
+      button.setAttribute('aria-selected', String(i === 0));
+      button.addEventListener('click', () => show(i));
+      return button;
+    }));
+  }
+
+  show(0);
 }
 
 /* -- boot ----------------------------------------------------------------- */
@@ -247,13 +297,14 @@ function renderMenu(root, menu, site) {
     site = await loadJSON(`${base()}data/site.json`);
   } catch (err) {
     console.error('Could not load site data.', err);
-    document.querySelectorAll('[data-status]').forEach((el) => { el.hidden = true; });
+    for (const node of document.querySelectorAll('[data-status]')) node.hidden = true;
     return;
   }
 
-  document.querySelectorAll('[data-status]').forEach((el) => renderStatus(el, site));
-  document.querySelectorAll('[data-hours-table]').forEach((el) => renderHours(el, site));
+  for (const node of document.querySelectorAll('[data-status]')) renderStatus(node, site);
+  for (const node of document.querySelectorAll('[data-hours-table]')) renderHours(node, site);
   wireContacts(site);
+  loadBrandMark(site);
 
   const menuRoot = document.querySelector('[data-menu]');
   if (menuRoot) {
@@ -261,7 +312,8 @@ function renderMenu(root, menu, site) {
       renderMenu(menuRoot, await loadJSON(`${base()}data/menu.json`), site);
     } catch (err) {
       console.error('Could not load the menu.', err);
-      menuRoot.innerHTML = '<p class="empty">The menu could not be loaded. Please call us on ' + site.phones[0] + '.</p>';
+      menuRoot.replaceChildren(el('p', 'empty',
+        `The menu could not be loaded. Please call us on ${site.phones[0]}.`));
     }
   }
 })();

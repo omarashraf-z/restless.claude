@@ -1,47 +1,536 @@
 {
-  "_about": "The whole menu lives here. Editing a price is a one-line change in this file — no HTML, no redeploy work. menu.html renders whatever is in `sections`.",
+  "_about": "The entire Restless menu. menu.html renders whatever is in here — editing a price is a one-line change in this file. Transcribed from photographs of the printed menu, September 2026.",
 
-  "_status": "PLACEHOLDER. Nothing below is Restless's real menu. The section names are a reasonable guess at the shape of a coffee house + bakery menu; the two sample items exist only to show the item format. Replace all of it with the real menu before this page goes public.",
-
-  "_itemFormat": {
-    "name": "required",
-    "description": "optional, one short line",
-    "price": "number, in EGP — or null to hide the price for that item",
-    "tags": "optional array: vegetarian | vegan | spicy | contains-nuts | signature",
-    "image": "optional filename inside assets/img/menu/"
+  "_editing": {
+    "menus": "Three top-level menus become the tabs on the menu page.",
+    "section": "id, name, optional note, optional addons, then either `items` or `groups` (groups are the Veggie/Meat splits the printed menu uses).",
+    "item": "name (required), description (optional), price (number in EGP, or null to hide it), badge (optional, e.g. \"new\" for the flash the printed menu uses)."
   },
 
-  "sections": [
+  "notice": "All prices are subject to 12% service charge and value added tax.",
+  "currency": "EGP",
+
+  "menus": [
     {
-      "id": "coffee",
-      "name": "Coffee",
-      "note": "",
-      "items": [
+      "id": "all-day",
+      "name": "All Day",
+      "sections": [
         {
-          "name": "SAMPLE — Flat White",
-          "description": "Delete this item. It is here to show the format only.",
-          "price": 0,
-          "tags": []
+          "id": "starters",
+          "name": "Starters",
+          "note": "Choice of sauces: ranch, marinara, sweet chilli, honey mustard or tartar.",
+          "items": [
+            { "name": "Fried Mozzarella Sticks", "price": 129.99 },
+            { "name": "Fried Chicken Strips", "price": 169.99 },
+            { "name": "Fried Chicken Sweet Chilli", "price": 179.99 },
+            { "name": "Cheese Nachos", "price": 229.99 },
+            { "name": "Cheese Nachos — half portion", "price": 149.99 },
+            { "name": "Beef Nachos", "price": 329.99 },
+            { "name": "Beef Nachos — half portion", "price": 199.99 },
+            { "name": "Chicken Nachos", "price": 329.99 },
+            { "name": "Chicken Nachos — half portion", "price": 199.99 },
+            { "name": "Restless Combo", "description": "Fried mozzarella sticks, fried chicken strips and fried chicken sweet chilli, with your choice of three sauces", "price": 329.99 }
+          ]
+        },
+        {
+          "id": "soup",
+          "name": "The Soup",
+          "items": [
+            { "name": "Creamy Chicken Soup", "price": 99.99 },
+            { "name": "Creamy Chicken Mushroom Soup", "price": 99.99 },
+            { "name": "Creamy Mushroom Soup", "price": 99.99 },
+            { "name": "Restless Mushroom Chicken Soup", "price": 99.99 },
+            { "name": "Onion Soup", "price": 99.99 },
+            { "name": "Cream of Tomato", "price": 99.99 }
+          ]
+        },
+        {
+          "id": "salad",
+          "name": "The Salad",
+          "note": "Choice of dressing: blue cheese, vinaigrette, honey mustard, ranch, balsamic or caesar.",
+          "items": [
+            { "name": "Chicken with Sweet Chilli Salad", "description": "Batavia, iceberg and romaine lettuce, spinach, cucumbers, cherry tomatoes, caramelized walnuts, sun dried tomatoes, bell peppers, red peppers, red onions, chicken and crouton, mixed with sweet chilli dressing", "price": 259.99, "badge": "house favourite" },
+            { "name": "Caesar Salad", "price": 149.99 },
+            { "name": "Chicken Caesar Salad", "price": 239.99 },
+            { "name": "Classic Greek Salad", "description": "Tomatoes, cucumbers, red onions, black olives and feta cheese, mixed with zesty vinaigrette dressing", "price": 149.99 },
+            { "name": "Mix Green Salad", "description": "Batavia, iceberg and romaine lettuce, spinach, cucumbers, cherry tomatoes, sun dried tomatoes, bell peppers, red peppers, red onions and crouton, mixed with your choice of dressing", "price": 149.99 },
+            { "name": "Rocca Salad", "description": "Rocca, cherry tomatoes, sun dried tomatoes, caramelized walnuts and buffalo mozzarella, mixed with balsamic dressing", "price": 199.99 },
+            { "name": "Halloumi Cheese Salad", "description": "Batavia, iceberg and romaine lettuce, spinach, radish, dried prunes, dried apricot, kiwi, caramelized walnuts and halloumi cheese, mixed with cherry dressing", "price": 209.99 },
+            { "name": "Restless House Salad", "description": "Batavia, iceberg and romaine lettuce, spinach, cherry tomatoes, sun dried tomatoes, apple, orange, kiwi, pineapple and crouton, mixed with honey mustard dressing", "price": 239.99 },
+            { "name": "Chicken Taco Salad with Mixed Cheese", "description": "Lettuce, sweet corn, kidney beans, black olives, colored peppers, cherry tomatoes, chicken and mixed cheese with a side of sour cream, mixed with zesty vinaigrette dressing", "price": 299.99 },
+            { "name": "Restless Fruit Salad", "description": "Seasonal fruits", "price": 149.99 }
+          ],
+          "addons": [{ "name": "Add ice cream to the fruit salad", "price": 49.99 }]
+        },
+        {
+          "id": "pasta",
+          "name": "The Pasta",
+          "note": "Served with your choice of pasta — penne or spaghetti.",
+          "addons": [{ "name": "Extra mushroom", "price": 29.99 }],
+          "items": [
+            { "name": "Mac and Cheese Pasta", "price": 229.99 },
+            { "name": "Spaghetti Meat Balls", "price": 249.99 },
+            { "name": "Steak Mac and Cheese Pasta", "price": 299.99 },
+            { "name": "Chicken Pomodoro Pasta", "price": 319.99 },
+            { "name": "Chicken with Creamy White Sauce Pasta", "price": 319.99 },
+            { "name": "Chicken Mushroom with Creamy White Sauce Pasta", "price": 349.99 },
+            { "name": "Chicken Pesto Pasta", "description": "Chicken, pesto sauce, black olives", "price": 359.99 },
+            { "name": "Chicken Alfredo Pasta", "price": 359.99 },
+            { "name": "Shrimp with Creamy White Sauce Pasta", "price": 379.99 },
+            { "name": "Shrimp Pomodoro Pasta", "price": 379.99 },
+            { "name": "Shrimp Pesto Pasta", "price": 379.99 },
+            { "name": "Shrimp Alfredo Pasta", "price": 399.99 }
+          ]
+        },
+        {
+          "id": "pizza",
+          "name": "The Pizza",
+          "note": "Neapolitan or Americano. Served with rocca salad and your choice of sauce: spicy garlic, spicy cheese, spicy thai, ranch or hickory smoked BBQ.",
+          "groups": [
+            {
+              "name": "Veggie",
+              "items": [
+                { "name": "Pizza Margherita", "price": 259.99 },
+                { "name": "Veggie Pizza", "description": "Colored pepper, green pepper, mushroom, black olives", "price": 259.99 },
+                { "name": "Ultimate Veggi Pizza", "description": "Colored peppers, spinach, cherry tomatoes, onions, mushroom, black olives, garlic, oregano, basil", "price": 269.99 },
+                { "name": "Mushroom Pizza", "price": 279.99 },
+                { "name": "Pesto Pizza", "description": "Sun dried tomatoes, rocca, caramelized walnuts, mozzarella cheese, parmesan cheese", "price": 279.99 },
+                { "name": "Quattro Formaggi Pizza", "price": 289.99 }
+              ]
+            },
+            {
+              "name": "Meat",
+              "items": [
+                { "name": "Italian Pizza", "description": "Pepperoni, Italian sausage, bell pepper", "price": 309.99 },
+                { "name": "Pepperoni Pizza", "price": 319.99 },
+                { "name": "Italian Sausage Pizza", "price": 319.99 },
+                { "name": "Armenian Sausage Pizza", "price": 319.99 },
+                { "name": "Philly Cheese Steak Pizza", "description": "Steak, cheese", "price": 319.99 },
+                { "name": "Hot and Spicy Steak Pizza", "description": "Steak, onions, jalapeno", "price": 319.99 },
+                { "name": "Chicken Pizza", "price": 319.99 },
+                { "name": "Hot and Spicy Chicken Pizza", "description": "Chicken, onions, jalapeno", "price": 319.99 },
+                { "name": "Chicken Pesto Pizza", "description": "Chicken, sun dried tomatoes, rocca, caramelized walnuts, mozzarella cheese, parmesan cheese", "price": 319.99 },
+                { "name": "Chicken BBQ Pizza", "price": 319.99 },
+                { "name": "All Meat Pizza", "description": "Pepperoni, Italian sausage, beef bacon", "price": 319.99 },
+                { "name": "Restless Hawaiian Pizza", "description": "Pepperoni, pineapple", "price": 319.99 },
+                { "name": "Restless Super Supreme Pizza", "description": "Pepperoni, Italian sausage, beef bacon, bell peppers, cherry tomatoes, onions, black olives", "price": 339.99 },
+                { "name": "Shrimp Pizza", "description": "Large shrimp, capri", "price": 349.99 }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "burger",
+          "name": "The Burger",
+          "note": "Served with potato chips.",
+          "items": [
+            { "name": "Classic Cheese Burger", "description": "Mild or spicy. Mayo, lettuce, tomato, onion, pickles, cheese", "price": 229.99 },
+            { "name": "Spicy Jalapeno Cheese Burger", "description": "Mayo, lettuce, onion, spicy jalapeno cheese", "price": 229.99 },
+            { "name": "Bacon Cheese Burger", "description": "Mild or spicy. Bacon, big tasty sauce, lettuce, tomato, onion, pickles, cheese", "price": 259.99 },
+            { "name": "Mega Mushroom Cheese Burger", "description": "Mild or spicy. Mushroom, mayo, lettuce, tomato, onion, pickles, cheese", "price": 259.99 },
+            { "name": "Hickory Smoked Cheese Burger", "description": "Smoked beef, hickory smoked BBQ sauce, lettuce, onion, pickles, cheese", "price": 259.99 },
+            { "name": "Burger with Fried Mozzarella Cheese", "description": "Ground steak, pepperoni and fried mozzarella in our special sauce", "price": 259.99 },
+            { "name": "Bacon Hickory Smoked Cheese Burger", "description": "Bacon, hickory smoked BBQ sauce, lettuce, onion, pickles, cheese", "price": 289.99 },
+            { "name": "Bacon Mega Mushroom Cheese Burger", "description": "Bacon, mushroom, mayo, lettuce, tomato, onion, pickles, cheese", "price": 289.99 },
+            { "name": "Beef Brisket Cheese Burger", "description": "Brisket, mayo, lettuce, pickles, cheese", "price": 309.99 },
+            { "name": "Steak House Cheese Burger", "price": 319.99 }
+          ]
+        },
+        {
+          "id": "plates",
+          "name": "The Plates",
+          "note": "All plates are served with one side dish: mashed potato, potato wedges, french fries, penne, spaghetti, caesar, rocca or mix green.",
+          "groups": [
+            {
+              "name": "Veal Escalope",
+              "items": [
+                { "name": "Veal Escalope — one piece", "price": 349.99 },
+                { "name": "Veal Escalope — two pieces", "price": 499.99 }
+              ]
+            },
+            {
+              "name": "Fried Chicken",
+              "items": [
+                { "name": "Country Fried Chicken — one piece", "price": 299.99 },
+                { "name": "Country Fried Chicken — two pieces", "price": 399.99 },
+                { "name": "Fried Chicken Sweet Chilli — one piece", "price": 299.99 },
+                { "name": "Fried Chicken Sweet Chilli — two pieces", "price": 399.99 },
+                { "name": "Fried Chicken Cordon Blue — one piece", "price": 299.99 },
+                { "name": "Fried Chicken Cordon Blue — two pieces", "price": 399.99 },
+                { "name": "Restless Fried Chicken Combo", "description": "Your choice of two pieces: cordon bleu, country fried chicken or fried chicken sweet chilli", "price": 409.99 }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sandwiches",
+          "name": "The Sandwiches",
+          "note": "Choice of bread: sourdough, white toast or wrap. Served with your choice of home potatoes, potato wedges, crispy potato or side salad.",
+          "addons": [{ "name": "Extra avocado", "price": 39.99 }],
+          "items": [
+            { "name": "Roasted Chicken & Cheese", "description": "Cold or hot", "price": 269.99 },
+            { "name": "Chicken Mushroom & Cheese", "description": "Hot", "price": 279.99 },
+            { "name": "Restless Chicken Mushroom & Cheese with Bacon", "description": "Hot", "price": 279.99 },
+            { "name": "Roast Beef & Cheese", "description": "Cold or hot", "price": 299.99 },
+            { "name": "Restless Smoked Turkey with Avocado & Cream Cheese", "description": "Cold. 100g smoked turkey, Philadelphia cream cheese, avocado, lettuce, rocca, cucumber, tomatoes, pickles", "price": 299.99 },
+            { "name": "Restless Smoked Turkey & Cheese", "description": "Cold or hot. 100g smoked turkey, cheddar cheese, lettuce, rocca, cucumber, tomatoes, pickles", "price": 299.99 },
+            { "name": "Gourmet Club Sandwich", "description": "Cold. Smoked turkey, roasted chicken, cheese", "price": 299.99 },
+            { "name": "Club Sandwich", "description": "Cold. Roasted chicken, roast beef, cheese", "price": 299.99 },
+            { "name": "Roast Beef Mega Mushroom & Cheese", "description": "Hot", "price": 309.99 },
+            { "name": "Restless Smoked Salmon with Avocado", "description": "Smoked salmon, Philadelphia cream cheese, avocado, lettuce, rocca, cucumber, onions, pickles, dill, capri", "price": 389.99 },
+            { "name": "Smoked Salmon with Philadelphia Cheese", "description": "Smoked salmon, Philadelphia cream cheese, lettuce, rocca, cucumber, onions, pickles, dill, capri", "price": 389.99 }
+          ]
+        },
+        {
+          "id": "desserts",
+          "name": "Desserts",
+          "note": "Choice of ice cream: salted caramel, chocolate, vanilla or blueberry.",
+          "items": [
+            { "name": "Ice Cream — one scoop", "price": 49.99 },
+            { "name": "Ice Cream — two scoops", "price": 79.99 },
+            { "name": "Oreo Madness — half portion", "price": 99.99 },
+            { "name": "Brownies", "price": 109.99 },
+            { "name": "Cheese Madness — half portion", "price": 109.99 },
+            { "name": "Chocolate Cake", "description": "Served with one scoop of vanilla ice cream", "price": 129.99 },
+            { "name": "Cheese Cake", "description": "Your choice of sauce: strawberry, chocolate or caramel", "price": 149.99 },
+            { "name": "Oreo Madness", "price": 149.99 },
+            { "name": "Brownies on Ice", "description": "Served with one scoop of vanilla ice cream", "price": 159.99 },
+            { "name": "Cheese Madness", "price": 169.99 },
+            { "name": "Molten Chocolate Cake", "description": "Served with one scoop of vanilla ice cream", "price": 179.99 }
+          ]
+        },
+        {
+          "id": "baked-goods",
+          "name": "Baked Goods",
+          "items": [
+            { "name": "Plain Croissant", "price": 89.99 },
+            { "name": "Cheese Croissant", "price": 109.99 },
+            { "name": "Nutella Croissant", "price": 109.99 },
+            { "name": "Almond Croissant", "price": 109.99 }
+          ]
         }
       ]
     },
+
     {
       "id": "breakfast",
       "name": "Breakfast",
-      "note": "",
-      "items": [
+      "note": "With any breakfast, one orange juice plus an American coffee or tea for 129.99.",
+      "sections": [
         {
-          "name": "SAMPLE — Item with no price shown",
-          "description": "Set price to null and no price is rendered for that item.",
-          "price": null,
-          "tags": ["vegetarian"]
+          "id": "omelette",
+          "name": "Omelette",
+          "note": "Served with toast, side salad and your choice of home potatoes, potato wedges or crispy potato. We only use fresh organic eggs.",
+          "groups": [
+            {
+              "name": "Veggie",
+              "items": [
+                { "name": "Cheese Omelette", "price": 259.99 },
+                { "name": "Mushroom & Cheese Omelette", "price": 279.99 },
+                { "name": "Spinach & Cheese Omelette", "description": "Spinach, cheddar cheese", "price": 279.99 },
+                { "name": "Veggie & Cheese Omelette", "description": "Bell peppers, spinach, cherry tomatoes, onions, sun dried tomatoes, cheddar cheese", "price": 289.99 }
+              ]
+            },
+            {
+              "name": "Meat",
+              "items": [
+                { "name": "Italian Sausage with Cheese Omelette", "price": 329.99 },
+                { "name": "Armenian Sausage with Cheese Omelette", "price": 329.99 },
+                { "name": "Greek Sausage with Cheese Omelette", "price": 329.99 },
+                { "name": "Smoked Turkey with Cheese Omelette", "description": "Smoked turkey, cheddar cheese", "price": 329.99 },
+                { "name": "Restless Omelette with Smoked Salmon", "description": "100g smoked salmon served with our special egg omelette and your choice of potato", "price": 379.99 }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "special-omelette",
+          "name": "Special Omelette",
+          "note": "Add home potatoes, potato wedges, crispy potato or side salad for 39.99.",
+          "items": [
+            { "name": "Restless Smoked Turkey Omelette with Avocado", "description": "Smoked turkey on sourdough with avocado and Philadelphia cream cheese, served with our special cheese omelette", "price": 349.99 },
+            { "name": "Restless Meat Omelette with Avocado", "description": "With avocado and Philadelphia cream cheese on sourdough, served with your choice of Italian, Armenian or Greek sausage omelette", "price": 349.99 },
+            { "name": "Restless Omelette with Smoked Salmon", "description": "Smoked salmon on sourdough with avocado and Philadelphia cream cheese, served with our special cheese omelette", "price": 379.99 },
+            { "name": "Restless Veggie Omelette with Smoked Salmon", "description": "Smoked salmon on sourdough with avocado and Philadelphia cream cheese, served with your choice of mushroom & cheese, veggie & cheese or spinach & cheese omelette", "price": 379.99 }
+          ]
+        },
+        {
+          "id": "scrambled",
+          "name": "Scrambled Eggs",
+          "note": "Served with toast, side salad and your choice of home potatoes, potato wedges or crispy potato. We only use fresh organic eggs.",
+          "addons": [{ "name": "Avocado and Philadelphia cream cheese on sourdough", "price": 99.99 }],
+          "groups": [
+            {
+              "name": "Veggie",
+              "items": [
+                { "name": "Scrambled Eggs", "price": 199.99 },
+                { "name": "Scrambled Eggs with Cheese", "price": 259.99 },
+                { "name": "Scrambled Eggs with Mushroom & Cheese", "price": 279.99 },
+                { "name": "Scrambled Eggs Spinach & Cheese", "description": "Spinach, cheddar cheese", "price": 279.99 },
+                { "name": "Scrambled Eggs with Veggie & Cheese", "description": "Bell peppers, spinach, cherry tomatoes, onions, sun dried tomatoes, cheddar cheese", "price": 289.99 }
+              ]
+            },
+            {
+              "name": "Meat",
+              "items": [
+                { "name": "Sausage Eggs & Cheese Scramble", "description": "Your choice of Italian, Armenian or Greek sausage", "price": 329.99 },
+                { "name": "Sausage, Veggie Eggs & Cheese Scramble", "description": "Your choice of Italian, Armenian or Greek sausage", "price": 329.99 },
+                { "name": "Crispy Bacon Eggs & Cheese Scramble", "price": 329.99 },
+                { "name": "Smoked Turkey Eggs & Cheese Scramble", "description": "Smoked turkey, cheddar cheese", "price": 329.99 },
+                { "name": "Smoked Turkey, Veggie Eggs & Cheese Scramble", "description": "Smoked turkey, bell peppers, spinach, cherry tomatoes, onions, sun dried tomatoes, cheese", "price": 329.99 },
+                { "name": "Sausage & Scrambled Eggs", "description": "Your choice of Italian, Armenian or Greek sausage, served with our special scrambled eggs", "price": 329.99 }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "manakeesh",
+          "name": "The Manakeesh",
+          "items": [
+            { "name": "Mankosha Zaatar", "price": 119.99 },
+            { "name": "Mankosha Halloumi Cheese", "price": 149.99 },
+            { "name": "Mankosha Halloumi Cheese with Zaatar", "price": 179.99 },
+            { "name": "Mankosha Halloumi Cheese with Italian Sausage", "price": 199.99 },
+            { "name": "Mankosha Halloumi Cheese with Armenian Sausage", "price": 199.99 },
+            { "name": "Mankosha Halloumi Cheese with Greek Sausage", "price": 199.99 },
+            { "name": "Mankosha Halloumi Cheese with Smoked Turkey", "price": 199.99 }
+          ]
+        },
+        {
+          "id": "cold-croissant",
+          "name": "Cold Croissant Sandwiches",
+          "note": "Add home potatoes, potato wedges, crispy potato or side salad for 39.99.",
+          "items": [
+            { "name": "Cheese Croissant", "price": 149.99, "badge": "new" },
+            { "name": "Avocado Veggie with Cream Cheese", "description": "Philadelphia cream cheese, avocado, lettuce, rocca, cucumber, tomatoes, pickles", "price": 189.99, "badge": "new" },
+            { "name": "Salami with Avocado & Cream Cheese", "description": "60g salami, Philadelphia cream cheese, avocado, lettuce, rocca, cucumber, tomatoes, pickles", "price": 239.99, "badge": "new" },
+            { "name": "Smoked Turkey with Avocado & Cream Cheese", "description": "60g smoked turkey, Philadelphia cream cheese, avocado, lettuce, rocca, cucumber, tomatoes, pickles", "price": 239.99, "badge": "new" },
+            { "name": "Restless Salami with Avocado & Cream Cheese", "description": "100g salami, Philadelphia cream cheese, avocado, lettuce, rocca, cucumber, tomatoes, pickles", "price": 269.99, "badge": "new" },
+            { "name": "Restless Smoked Turkey with Avocado & Cream Cheese", "description": "100g smoked turkey, Philadelphia cream cheese, avocado, lettuce, rocca, cucumber, tomatoes, pickles", "price": 269.99, "badge": "new" },
+            { "name": "Smoked Salmon with Avocado", "description": "60g smoked salmon, Philadelphia cream cheese, avocado, lettuce, rocca, cucumber, onions, pickles, dill, capri", "price": 309.99, "badge": "new" },
+            { "name": "Restless Smoked Salmon with Avocado", "description": "100g smoked salmon, Philadelphia cream cheese, avocado, lettuce, rocca, cucumber, onions, pickles, dill, capri", "price": 359.99, "badge": "new" }
+          ]
+        },
+        {
+          "id": "hot-croissant",
+          "name": "Hot Croissant Sandwiches",
+          "note": "Add home potatoes, potato wedges, crispy potato or side salad for 39.99.",
+          "addons": [{ "name": "Extra avocado", "price": 39.99 }],
+          "items": [
+            { "name": "Eggs & Cheese", "description": "3 eggs, cheddar cheese, lettuce, rocca, cucumber, tomatoes, pickles", "price": 179.99, "badge": "new" },
+            { "name": "Roasted Chicken & Cheese", "description": "60g roasted chicken, cheddar cheese, lettuce, rocca, pickles", "price": 199.99 },
+            { "name": "Restless Roasted Chicken & Cheese", "description": "100g roasted chicken, cheddar cheese, lettuce, rocca, pickles", "price": 239.99 },
+            { "name": "Restless Smoked Turkey & Cheese", "description": "100g smoked turkey, cheddar cheese, lettuce, rocca, cucumber, tomatoes, pickles", "price": 269.99, "badge": "new" },
+            { "name": "Restless Salami & Cheese", "description": "100g salami, cheddar cheese, lettuce, rocca, cucumber, tomatoes, pickles", "price": 269.99, "badge": "new" },
+            { "name": "Eggs Smoked Turkey & Cheese", "description": "3 eggs, smoked turkey, cheddar cheese, lettuce, rocca, cucumber, tomatoes, pickles", "price": 269.99, "badge": "new" },
+            { "name": "Eggs Salami & Cheese", "description": "3 eggs, salami, cheddar cheese, lettuce, rocca, cucumber, tomatoes, pickles", "price": 269.99, "badge": "new" },
+            { "name": "Eggs Italian Sausage & Cheese", "description": "3 eggs, Italian sausage, cheddar cheese, lettuce, rocca, cucumber, tomatoes, pickles", "price": 269.99, "badge": "new" },
+            { "name": "Eggs Armenian Sausage & Cheese", "description": "3 eggs, Armenian sausage, cheddar cheese, lettuce, rocca, cucumber, tomatoes, pickles", "price": 269.99, "badge": "new" },
+            { "name": "Eggs Greek Sausage & Cheese", "description": "3 eggs, Greek sausage, cheddar cheese, lettuce, rocca, cucumber, tomatoes, pickles, Greek olives", "price": 269.99, "badge": "new" },
+            { "name": "Restless Smoked Salmon, Eggs with Avocado", "description": "3 eggs, smoked salmon, Philadelphia cheese, avocado, lettuce, rocca, cucumber, onions, pickles, dill, capri", "price": 379.99, "badge": "new" }
+          ]
+        },
+        {
+          "id": "cold-sandwiches",
+          "name": "Cold Sandwiches",
+          "note": "Choice of bread: sourdough or white toast. Add home potatoes, potato wedges, crispy potato or side salad for 39.99.",
+          "items": [
+            { "name": "Restless Salami with Avocado & Cream Cheese", "description": "Salami, Philadelphia cream cheese, avocado, lettuce, rocca, cucumber, tomatoes, pickles", "price": 279.99, "badge": "new" },
+            { "name": "Restless Smoked Turkey with Avocado & Cream Cheese", "description": "Smoked turkey, Philadelphia cream cheese, avocado, lettuce, rocca, cucumber, tomatoes, pickles", "price": 289.99, "badge": "new" },
+            { "name": "Restless Smoked Salmon with Avocado", "description": "Smoked salmon, Philadelphia cream cheese, avocado, lettuce, rocca, cucumber, onions, pickles, dill, capri", "price": 359.99, "badge": "new" }
+          ]
+        },
+        {
+          "id": "hot-sandwiches",
+          "name": "Hot Sandwiches",
+          "note": "Choice of bread: sourdough or white toast. Add home potatoes, potato wedges, crispy potato or side salad for 39.99.",
+          "addons": [{ "name": "Extra avocado", "price": 39.99 }],
+          "items": [
+            { "name": "Eggs & Cheese", "description": "3 eggs, cheddar cheese", "price": 179.99 },
+            { "name": "Restless Salami & Cheese", "description": "Salami, cheddar cheese, lettuce, rocca, pickles", "price": 279.99, "badge": "new" },
+            { "name": "Eggs Salami & Cheese", "description": "3 eggs, salami, cheddar cheese, lettuce, rocca, pickles", "price": 279.99 },
+            { "name": "Eggs Greek Sausage & Cheese", "description": "3 eggs, Greek sausage, cheddar cheese, lettuce, rocca, pickles, Greek olives", "price": 279.99 },
+            { "name": "Restless Smoked Turkey & Cheese", "description": "Smoked turkey, cheddar cheese, lettuce, rocca, pickles", "price": 289.99, "badge": "new" },
+            { "name": "Eggs Smoked Turkey & Cheese", "description": "3 eggs, smoked turkey, cheddar cheese, lettuce, rocca, pickles", "price": 289.99 },
+            { "name": "Restless Sausage & Eggs", "description": "Your choice of Italian or Armenian sausage. 3 eggs, sausage, cheddar cheese, lettuce, rocca, pickles", "price": 289.99 },
+            { "name": "Restless Smoked Salmon & Eggs with Avocado", "description": "3 eggs, smoked salmon, Philadelphia cheese, avocado, lettuce, rocca, cucumber, onions, pickles, dill, capri", "price": 399.99 }
+          ]
+        },
+        {
+          "id": "cold-wrap",
+          "name": "Cold Wrap",
+          "note": "Add home potatoes, potato wedges, crispy potato or side salad for 39.99.",
+          "items": [
+            { "name": "Restless Salami with Avocado & Cream Cheese", "description": "Salami, Philadelphia cream cheese, avocado, lettuce, rocca, cucumber, tomatoes, onions, pickles", "price": 239.99, "badge": "new" },
+            { "name": "Restless Smoked Turkey with Avocado & Cream Cheese", "description": "Smoked turkey, Philadelphia cream cheese, avocado, lettuce, rocca, cucumber, tomatoes, onions, pickles", "price": 249.99, "badge": "new" },
+            { "name": "Restless Smoked Salmon with Avocado", "description": "Smoked salmon, Philadelphia cream cheese, avocado, lettuce, rocca, cucumber, onions, pickles, dill, capri", "price": 299.99, "badge": "new" }
+          ]
+        },
+        {
+          "id": "hot-wrap",
+          "name": "Hot Wrap",
+          "note": "Add home potatoes, potato wedges, crispy potato or side salad for 39.99.",
+          "items": [
+            { "name": "Eggs & Cheese", "description": "3 eggs, cheddar cheese", "price": 149.99 },
+            { "name": "Mushroom & Cheese Eggs", "description": "3 eggs, mushroom, cheddar cheese", "price": 169.99 },
+            { "name": "Restless Salami & Cheese", "description": "Salami, cheddar cheese, lettuce, rocca, cucumber, tomatoes, onions, pickles", "price": 239.99, "badge": "new" },
+            { "name": "Eggs Salami & Cheese Wrap", "description": "3 eggs, salami, cheddar cheese, lettuce, rocca, cucumber, tomatoes, onions, pickles", "price": 239.99, "badge": "new" },
+            { "name": "Eggs Italian Sausage & Cheese", "description": "3 eggs, Italian sausage, cheddar cheese, lettuce, rocca, cucumber, tomatoes, onions, pickles", "price": 239.99, "badge": "new" },
+            { "name": "Eggs Armenian Sausage & Cheese", "description": "3 eggs, Armenian sausage, cheddar cheese, lettuce, rocca, cucumber, tomatoes, onions, pickles", "price": 239.99, "badge": "new" },
+            { "name": "Eggs Greek Sausage & Cheese", "description": "3 eggs, Greek sausage, cheddar cheese, lettuce, rocca, cucumber, tomatoes, onions, pickles, Greek olives", "price": 239.99, "badge": "new" },
+            { "name": "Restless Smoked Turkey & Cheese", "description": "Smoked turkey, cheddar cheese, lettuce, rocca, cucumber, tomatoes, onions, pickles", "price": 249.99, "badge": "new" },
+            { "name": "Eggs Smoked Turkey & Cheese", "description": "3 eggs, smoked turkey, cheddar cheese, lettuce, rocca, cucumber, tomatoes, onions, pickles", "price": 249.99, "badge": "new" },
+            { "name": "Restless Smoked Salmon & Eggs with Avocado", "description": "3 eggs, smoked salmon, Philadelphia cream cheese, avocado, lettuce, rocca, cucumber, onions, pickles, dill, capri", "price": 329.99, "badge": "new" }
+          ]
         }
       ]
     },
-    { "id": "pizza", "name": "Pizza", "note": "", "items": [] },
-    { "id": "pasta", "name": "Pasta", "note": "", "items": [] },
-    { "id": "bakery", "name": "Bakery", "note": "", "items": [] },
-    { "id": "cold", "name": "Cold Drinks", "note": "", "items": [] },
-    { "id": "desserts", "name": "Desserts", "note": "", "items": [] }
+
+    {
+      "id": "drinks",
+      "name": "Drinks",
+      "sections": [
+        {
+          "id": "hot-coffee",
+          "name": "Hot Coffee",
+          "addons": [{ "name": "Coffee flavours — caramel, hazelnut or vanilla", "price": 29.99 }],
+          "items": [
+            { "name": "Turkish", "price": 69.99 },
+            { "name": "Ristretto", "price": 69.99 },
+            { "name": "Espresso", "price": 69.99 },
+            { "name": "Double Espresso", "price": 89.99 },
+            { "name": "Cortado", "price": 89.99 },
+            { "name": "Macchiato", "price": 89.99 },
+            { "name": "Café Latte 12oz", "description": "Single shot", "price": 89.99 },
+            { "name": "Double Turkish", "price": 99.99 },
+            { "name": "Flat White", "price": 99.99 },
+            { "name": "Italian Cappuccino", "price": 99.99 },
+            { "name": "Cappuccino", "price": 99.99 },
+            { "name": "Café Latte 12oz", "description": "Double shot", "price": 99.99 },
+            { "name": "Café Latte 16oz", "description": "Double shot", "price": 99.99 },
+            { "name": "Café Americano", "price": 99.99 },
+            { "name": "American Coffee", "price": 99.99 },
+            { "name": "Cappuccino Grande", "price": 109.99 },
+            { "name": "Café Latte 16oz", "description": "Triple shot", "price": 109.99 },
+            { "name": "Café Mocha", "price": 109.99 },
+            { "name": "Double French Coffee", "price": 109.99 },
+            { "name": "Spanish Latte", "price": 109.99 },
+            { "name": "Pistachio Coffee", "price": 109.99 },
+            { "name": "Caramel Nut Macchiato", "price": 109.99 }
+          ]
+        },
+        {
+          "id": "hot-tea",
+          "name": "Tea & Hot Drinks",
+          "items": [
+            { "name": "Hot Cinnamon", "price": 59.99 },
+            { "name": "Tea", "price": 69.99 },
+            { "name": "Green Tea", "price": 69.99 },
+            { "name": "Hot Cider", "price": 69.99 },
+            { "name": "Tea Latte", "price": 79.99 },
+            { "name": "Flavored Tea", "price": 79.99 },
+            { "name": "Hot Chocolate", "price": 109.99 }
+          ]
+        },
+        {
+          "id": "ice-drinks",
+          "name": "Ice Drinks",
+          "groups": [
+            {
+              "name": "Frappuccino",
+              "items": [
+                { "name": "Classic Frappé", "price": 119.99 },
+                { "name": "Caramel Frappé", "price": 119.99 },
+                { "name": "Salted Caramel Frappé", "price": 119.99 },
+                { "name": "Vanilla Frappé", "price": 119.99 },
+                { "name": "Chocolate Frappé", "price": 119.99 },
+                { "name": "Spanish Frappé", "price": 119.99 },
+                { "name": "White Chocolate Frappé", "price": 119.99 },
+                { "name": "Pistachio Frappé", "price": 119.99 }
+              ]
+            },
+            {
+              "name": "Espresso Shakes",
+              "items": [
+                { "name": "Oreo Espresso Shake", "price": 119.99 },
+                { "name": "Caramel Espresso Shake", "price": 119.99 },
+                { "name": "Salted Caramel Espresso Shake", "price": 119.99 },
+                { "name": "Chocolate Espresso Shake", "price": 119.99 },
+                { "name": "Vanilla Espresso Shake", "price": 119.99 }
+              ]
+            },
+            {
+              "name": "Iced Coffee & Tea",
+              "items": [
+                { "name": "Iced Tea", "price": 69.99 },
+                { "name": "Flavored Iced Tea", "price": 79.99 },
+                { "name": "Iced Spanish Latte", "price": 109.99 },
+                { "name": "Iced Caramel Nut Macchiato", "price": 119.99 },
+                { "name": "Iced White Mocca", "price": 119.99 },
+                { "name": "Iced Americano", "price": 119.99 },
+                { "name": "Iced Latte", "price": 119.99 }
+              ]
+            },
+            {
+              "name": "Milkshakes",
+              "items": [
+                { "name": "Oreo Shake", "price": 109.99 },
+                { "name": "Chocolate", "price": 109.99 },
+                { "name": "Blueberry", "price": 109.99 }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "juice-bar",
+          "name": "Juice Bar",
+          "items": [
+            { "name": "Lemon Mint", "price": 99.99 },
+            { "name": "Fresh Orange Juice", "description": "Seasonal", "price": 99.99 },
+            { "name": "Fresh Mango", "price": 99.99 },
+            { "name": "Fresh Strawberry", "price": 99.99 }
+          ]
+        },
+        {
+          "id": "cocktails",
+          "name": "Cocktails",
+          "items": [
+            { "name": "Pina Colada", "description": "Pineapple, coconut, orange, honey", "price": 109.99 },
+            { "name": "Blue Colada", "description": "Pineapple, coconut, blue ocean flavour", "price": 109.99 },
+            { "name": "Banana Jungle", "description": "Mango, strawberry, banana", "price": 109.99 },
+            { "name": "Mojito Blue Curacao", "description": "Lemon, mint, blue ocean flavour, 7up", "price": 109.99 },
+            { "name": "Mojito Passion Fruit", "description": "Lemon, mint, passion fruit, 7up", "price": 109.99 }
+          ]
+        },
+        {
+          "id": "smoothies",
+          "name": "Smoothies",
+          "items": [
+            { "name": "Restless Tropical", "description": "Banana, mango, strawberry", "price": 109.99 },
+            { "name": "Tropical Smoothie", "description": "Mango, orange, pineapple", "price": 109.99 },
+            { "name": "Lemon Mint Smoothie", "price": 109.99 },
+            { "name": "Lemon Mint Soda", "price": 109.99 },
+            { "name": "Passion Fruit Smoothie", "price": 109.99 },
+            { "name": "Watermelon Smoothie", "description": "Seasonal", "price": 109.99 },
+            { "name": "Summer Passion Fruit Smoothie", "description": "Passion fruit, mango, mint", "price": 109.99 },
+            { "name": "Mango Smoothie", "price": 109.99 },
+            { "name": "Kiwi Mango Smoothie", "price": 109.99 },
+            { "name": "Strawberry Smoothie", "price": 109.99 },
+            { "name": "Mix Berries Smoothie", "description": "Blueberry, strawberry", "price": 109.99 },
+            { "name": "Pina Colada Smoothie", "price": 109.99 },
+            { "name": "Blue Colada Smoothie", "price": 109.99 }
+          ]
+        },
+        {
+          "id": "cold-drinks",
+          "name": "Cold Drinks",
+          "items": [
+            { "name": "Mineral Water", "description": "Small", "price": 49.99 },
+            { "name": "Soft Drink", "price": 59.99 },
+            { "name": "Red Bull", "price": 89.99 }
+          ]
+        }
+      ]
+    }
   ]
 }

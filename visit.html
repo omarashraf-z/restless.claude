@@ -4,12 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Visit — Restless Coffee House &amp; Bakery</title>
-<meta name="description" content="Restless Coffee House &amp; Bakery, 232 St. cross 213 St., Degla, Maadi, Cairo. Hours, directions and phone numbers.">
+<meta name="description" content="Restless Coffee House &amp; Bakery, 232 St. cross 213 St., Degla, Maadi, Cairo. Open 8am to midnight every day. Hours, directions and phone numbers.">
 <meta name="color-scheme" content="light dark">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Visit Restless — Degla, Maadi">
+<meta property="og:description" content="232 St., cross 213 St., Degla, Maadi. Open 8am to midnight, every day.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Instrument+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Yellowtail&display=swap">
 <link rel="stylesheet" href="assets/css/site.css">
 </head>
 
@@ -19,7 +23,8 @@
 <header class="site-head">
   <div class="wrap">
     <a class="brand" href="index.html">
-      <span>Restless<small>Coffee House &amp; Bakery</small></span>
+      <span class="brand-mark brand-mark--fallback" data-brand-mark aria-hidden="true">R</span>
+      <span class="brand-name">Restless<small>Coffee House &amp; Bakery</small></span>
     </a>
     <nav class="nav" aria-label="Primary">
       <a href="index.html">Home</a>
@@ -30,27 +35,27 @@
 </header>
 
 <main id="main">
-  <section class="hero wrap">
+  <section class="page-head wrap">
     <p class="eyebrow">Visit</p>
     <h1>232 St., cross 213 St.<br>Degla, Maadi</h1>
-    <p><span class="status" data-status hidden>Checking hours…</span></p>
+    <p style="margin-top:1rem"><span class="status" data-status hidden>Checking hours…</span></p>
 
     <ul class="actions">
       <li><a class="btn btn--primary" data-maps href="#" target="_blank" rel="noopener">Get directions</a></li>
-      <li><a class="btn" data-tel href="#">Call the café</a></li>
-      <li><a class="btn" data-whatsapp="Hi Restless, I have a question." href="#">Message on WhatsApp</a></li>
+      <li><a class="btn" data-tel href="#">Call us</a></li>
+      <li><a class="btn" data-whatsapp="Hi Restless, I have a question." href="#">WhatsApp</a></li>
     </ul>
   </section>
 
   <section class="section wrap">
     <div class="section-head">
       <p class="eyebrow">Opening hours</p>
-      <h2>Through the week</h2>
+      <h2>Every day, 8am to midnight</h2>
     </div>
     <table class="hours" data-hours-table>
       <tbody><tr><td>Loading…</td></tr></tbody>
     </table>
-    <p>Open every day, including Friday. Kitchen and bakery run the full day.</p>
+    <p style="margin-top:1.25rem">Open seven days, Friday included. The kitchen and the bakery both run the full day.</p>
   </section>
 
   <section class="section wrap">
@@ -73,11 +78,14 @@
       </div>
       <div>
         <dt>Social</dt>
-        <dd><a href="https://www.facebook.com/restless.coffeehouse/" target="_blank" rel="noopener">Facebook</a></dd>
+        <dd>
+          <a href="https://www.instagram.com/restless.coffeehouse/" target="_blank" rel="noopener">Instagram</a><br>
+          <a href="https://www.facebook.com/restless.coffeehouse/" target="_blank" rel="noopener">Facebook</a>
+        </dd>
       </div>
       <div>
         <dt>Parking</dt>
-        <dd>TODO — a line about where to park, and the Degla landmark that makes 232 St. easy to find.</dd>
+        <dd>TODO — a line on where to park, and the Degla landmark that makes 232 St. easy to find.</dd>
       </div>
     </dl>
   </section>
@@ -93,9 +101,12 @@
     <div>
       <a href="index.html">Home</a><br>
       <a href="menu.html">Menu</a><br>
+      <a href="https://www.instagram.com/restless.coffeehouse/" target="_blank" rel="noopener">Instagram</a><br>
       <a href="https://www.facebook.com/restless.coffeehouse/" target="_blank" rel="noopener">Facebook</a>
     </div>
-    <div class="colophon">Working draft · pending brand assets</div>
+    <div>
+      <span class="script">The perks of the past<br>in the present</span>
+    </div>
   </div>
 </footer>
 
