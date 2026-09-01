@@ -227,35 +227,43 @@ function renderHours(table, site) {
 
 /* -- brand mark ----------------------------------------------------------- */
 
-/* The logo file may not be in the repo yet, and whoever adds it shouldn't have
- * to care about the extension. Try each candidate in turn; the first that loads
- * wins. If none do, the typographic stand-in stays. */
-function loadBrandMark(site) {
-  const slots = document.querySelectorAll('[data-brand-mark]');
-  const candidates = site.logo ? [site.logo, ...(site.logoAlternates ?? [])] : [];
-  if (!slots.length || !candidates.length) return;
+/* The logo is in the markup, so it paints with the page and nothing flashes
+ * before it. This only handles the failure case: if the file is missing or
+ * renamed, walk the alternate extensions, and fall back to a typographic mark
+ * only when none of them load. */
+function guardBrandMark(site) {
+  const marks = [...document.querySelectorAll('img[data-brand-mark]')];
+  if (!marks.length) return;
 
-  const tryNext = (i) => {
-    if (i >= candidates.length) return;
+  const candidates = [site.logo, ...(site.logoAlternates ?? [])].filter(Boolean);
+
+  const useTypographic = () => {
+    for (const mark of marks) {
+      const span = el('span', 'brand-mark brand-mark--fallback', 'R');
+      span.setAttribute('aria-hidden', 'true');
+      span.dataset.brandMark = '';
+      mark.replaceWith(span);
+    }
+  };
+
+  const tryFrom = (i) => {
+    if (i >= candidates.length) { useTypographic(); return; }
     const src = base() + candidates[i];
     const probe = new Image();
-    probe.onerror = () => tryNext(i + 1);
+    probe.onerror = () => tryFrom(i + 1);
     probe.onload = () => {
-      for (const slot of slots) {
-        const img = el('img', 'brand-mark');
-        img.src = src;
-        img.alt = `${site.name} logo`;
-        img.width = 56;
-        img.height = 56;
-        slot.replaceWith(img);
-      }
+      for (const mark of marks) mark.src = src;
       const favicon = document.querySelector('link[rel="icon"]');
       if (favicon) favicon.href = src;
     };
     probe.src = src;
   };
 
-  tryNext(0);
+  for (const mark of marks) {
+    mark.addEventListener('error', () => tryFrom(1), { once: true });
+    // Covers an image that already failed before this script ran.
+    if (mark.complete && mark.naturalWidth === 0) tryFrom(1);
+  }
 }
 
 /* -- contact links -------------------------------------------------------- */
@@ -430,7 +438,7 @@ function renderAll() {
     node.addEventListener('click', () => setLanguage(state.lang === 'en' ? 'ar' : 'en'));
   }
 
-  loadBrandMark(state.site);
+  guardBrandMark(state.site);
 
   if (document.querySelector('[data-menu]')) {
     try {
