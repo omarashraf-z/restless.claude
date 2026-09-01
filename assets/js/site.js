@@ -138,25 +138,36 @@ function renderHours(table, site) {
 
 /* -- brand mark ----------------------------------------------------------- */
 
-/* The logo file may not be in the repo yet. Try to load it; if it isn't there,
- * leave the typographic stand-in in place. Adding assets/img/logo.png later
- * makes every page pick it up with no code change. */
+/* The logo file may not be in the repo yet, and whoever adds it shouldn't have to
+ * care about the extension. Try each candidate in turn; the first that loads
+ * wins. If none do, the typographic stand-in stays. Adding the file later needs
+ * no code change. */
 function loadBrandMark(site) {
   const slots = document.querySelectorAll('[data-brand-mark]');
-  if (!slots.length || !site.logo) return;
+  const candidates = site.logo ? [site.logo, ...(site.logoAlternates ?? [])] : [];
+  if (!slots.length || !candidates.length) return;
 
-  const probe = new Image();
-  probe.onload = () => {
-    for (const slot of slots) {
-      const img = el('img', 'brand-mark');
-      img.src = base() + site.logo;
-      img.alt = `${site.name} logo`;
-      img.width = 42;
-      img.height = 42;
-      slot.replaceWith(img);
-    }
+  const tryNext = (i) => {
+    if (i >= candidates.length) return;
+    const src = base() + candidates[i];
+    const probe = new Image();
+    probe.onerror = () => tryNext(i + 1);
+    probe.onload = () => {
+      for (const slot of slots) {
+        const img = el('img', 'brand-mark');
+        img.src = src;
+        img.alt = `${site.name} logo`;
+        img.width = 42;
+        img.height = 42;
+        slot.replaceWith(img);
+      }
+      const favicon = document.querySelector('link[rel="icon"]');
+      if (favicon) favicon.href = src;
+    };
+    probe.src = src;
   };
-  probe.src = base() + site.logo;
+
+  tryNext(0);
 }
 
 /* -- contact links -------------------------------------------------------- */

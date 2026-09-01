@@ -28,7 +28,8 @@
   "email": "TODO",
 
   "logo": "assets/img/logo.png",
-  "_logo_note": "Drop the badge logo in at this path and every page picks it up automatically. Until the file exists, pages fall back to a typographic mark.",
+  "logoAlternates": ["assets/img/logo.jpg", "assets/img/logo.jpeg", "assets/img/logo.svg", "assets/img/logo.webp"],
+  "_logo_note": "Save the badge logo into assets/img/ named 'logo' with any of these extensions. Every page picks up the first one that loads, and uses it as the favicon too. Until one exists, pages fall back to a typographic mark.",
 
   "hours": {
     "_note": "Open 8am to midnight, every day. 24-hour times; a close earlier than the open means the shift runs past midnight. Set closed:true for a day off. Add Ramadan overrides here if the hours change.",
