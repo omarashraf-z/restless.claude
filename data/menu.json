@@ -238,7 +238,7 @@
                 { "name": "Armenian Sausage with Cheese Omelette", "price": 329.99 },
                 { "name": "Greek Sausage with Cheese Omelette", "price": 329.99 },
                 { "name": "Smoked Turkey with Cheese Omelette", "description": "Smoked turkey, cheddar cheese", "price": 329.99 },
-                { "name": "Ristless Omelette with Smoked Salmon", "_spelling": "Spelled 'Ristless' on the printed menu. Kept deliberately to match the print — do not 'fix' it without asking.", "description": "100g smoked salmon served with our special egg omelette and your choice of potato", "price": 379.99 }
+                { "name": "Restless Omelette with Smoked Salmon", "_spelling": "Printed as 'Ristless' on this page of the menu and as 'Restless' on the Special Omelette page. Normalised to 'Restless' on purpose, so the same dish reads the same way in both places.", "description": "100g smoked salmon served with our special egg omelette and your choice of potato", "price": 379.99 }
               ]
             }
           ]

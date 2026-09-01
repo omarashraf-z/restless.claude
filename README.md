@@ -128,16 +128,16 @@ Needed from Restless before the site can go public:
       not a content one — worth settling early)
 - [ ] A domain
 
-## Spellings kept from the print
+## Spellings
 
-The site matches the printed menu exactly, including two misspellings. Both are marked
-with a `_spelling` note in `data/menu.json` so nobody silently "corrects" them later:
+The site follows the printed menu, with one deliberate exception. Both cases are marked
+with a `_spelling` note in `data/menu.json` so nobody changes them by accident:
 
-- **"Ristless Omelette with Smoked Salmon"** — the breakfast omelette page. Note the same
-  dish is spelled *Restless* on the Special Omelette page, and the site follows each page.
-- **"Café Latte 16oz (Truple shot)"** — the hot coffee page.
-
-Change the printed menu first, then change these.
+- **"Café Latte 16oz (Truple shot)"** — kept as printed, on the hot coffee page. Change
+  the printed menu first, then change this.
+- **"Restless Omelette with Smoked Salmon"** — normalised. The print has it as *Ristless*
+  on the breakfast omelette page and *Restless* on the Special Omelette page; the same
+  dish at the same price shouldn't be spelled two ways on one website.
 
 One open question: Cheese Croissant is 109.99 under Baked Goods and 149.99 as a croissant
 sandwich — presumably plain-baked versus made up as a sandwich, but worth confirming so
