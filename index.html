@@ -53,78 +53,80 @@
 </head>
 
 <body>
-<a class="skip" href="#main">Skip to content</a>
+<a class="skip" href="#main" data-i18n="skip.content">Skip to content</a>
 
 <header class="site-head">
   <div class="wrap">
     <a class="brand" href="index.html">
       <span class="brand-mark brand-mark--fallback" data-brand-mark aria-hidden="true">R</span>
-      <span class="brand-name">Restless<small>Coffee House &amp; Bakery</small></span>
+      <span class="brand-name">Restless<small data-i18n="brand.sub">Coffee House &amp; Bakery</small></span>
     </a>
-    <nav class="nav" aria-label="Primary">
-      <a href="index.html" aria-current="page">Home</a>
-      <a href="menu.html">Menu</a>
-      <a href="visit.html">Visit</a>
+    <div class="head-end">
+      <nav class="nav" data-i18n-aria="nav.aria" aria-label="Primary">
+      <a href="index.html" aria-current="page"><span data-i18n="nav.home">Home</span></a>
+      <a href="menu.html"><span data-i18n="nav.menu">Menu</span></a>
+      <a href="visit.html"><span data-i18n="nav.visit">Visit</span></a>
     </nav>
+      <button type="button" class="lang-toggle" data-lang-toggle hidden>عربي</button>
+    </div>
   </div>
 </header>
 
 <main id="main">
 
   <section class="hero wrap">
-    <p class="eyebrow">232 St. · Degla · Maadi</p>
-    <h1>Restless</h1>
-    <p class="script">The perks of the past in the present</p>
-    <p class="lede">Coffee poured properly, croissants out of our own oven, and a kitchen that runs from breakfast until midnight — seven days a week.</p>
+    <p class="eyebrow" data-i18n="home.eyebrow">232 St. · Degla · Maadi</p>
+    <h1 data-i18n="home.title">Restless</h1>
+    <p class="script" data-i18n="home.tagline">The perks of the past in the present</p>
+    <p class="lede" data-i18n="home.lede">Coffee poured properly, croissants out of our own oven, and a kitchen that runs from breakfast until midnight — seven days a week.</p>
 
     <p style="margin-top:1.5rem"><span class="status" data-status hidden>Checking hours…</span></p>
 
     <ul class="actions">
-      <li><a class="btn btn--primary" data-whatsapp="Hi Restless, I'd like to place an order." href="#">Order on WhatsApp</a></li>
-      <li><a class="btn" href="menu.html">See the menu</a></li>
-      <li><a class="btn" data-tel href="#">Call us</a></li>
-      <li><a class="btn" data-maps href="#" target="_blank" rel="noopener">Directions</a></li>
+      <li><a class="btn btn--primary" data-whatsapp="cta.whatsappMessage" href="#"><span data-i18n="cta.whatsapp">Order on WhatsApp</span></a></li>
+      <li><a class="btn" href="menu.html" data-i18n="cta.menu">See the menu</a></li>
+      <li><a class="btn" data-tel href="#" data-i18n="cta.call">Call us</a></li>
+      <li><a class="btn" data-maps href="#" target="_blank" rel="noopener" data-i18n="cta.directions">Directions</a></li>
     </ul>
   </section>
 
   <section class="section wrap">
     <div class="section-head">
-      <p class="eyebrow">What we do</p>
-      <h2>A coffee house and a bakery, in one room</h2>
+      <p class="eyebrow" data-i18n="home.about.eyebrow">What we do</p>
+      <h2 data-i18n="home.about.title">A coffee house and a bakery, in one room</h2>
     </div>
 
     <div class="narrow">
-      <p>Breakfast starts at eight — omelettes and scrambles made with fresh organic eggs, manakeesh out of the oven, croissants filled to order. The espresso bar runs all day: Turkish, cortado, Spanish latte, and a frappé list for the summer.</p>
-      <p>By lunch the kitchen is on: Neapolitan and Americano pizza, pasta by the plate, burgers, salads built properly. It keeps going until midnight, which in Maadi matters.</p>
-      <p>And there is always something baked. Cheesecake, molten chocolate cake, brownies on ice, and the croissants that started it.</p>
+      <p data-i18n="home.about.p1">Breakfast starts at eight — omelettes and scrambles made with fresh organic eggs, manakeesh out of the oven, croissants filled to order. The espresso bar runs all day: Turkish, cortado, Spanish latte, and a frappé list for the summer.</p>
+      <p data-i18n="home.about.p2">By lunch the kitchen is on: Neapolitan and Americano pizza, pasta by the plate, burgers, salads built properly. It keeps going until midnight, which in Maadi matters.</p>
+      <p data-i18n="home.about.p3">And there is always something baked. Cheesecake, molten chocolate cake, brownies on ice, and the croissants that started it.</p>
     </div>
   </section>
 
   <section class="section wrap">
     <div class="section-head">
-      <p class="eyebrow">Find us</p>
-      <h2>Where and when</h2>
+      <p class="eyebrow" data-i18n="home.find.eyebrow">Find us</p>
+      <h2 data-i18n="home.find.title">Where and when</h2>
     </div>
 
     <dl class="facts">
       <div>
-        <dt>Address</dt>
+        <dt data-i18n="facts.address">Address</dt>
         <dd>
-          232 St., cross 213 St.<br>
-          Degla, Maadi, Cairo<br>
-          <a data-maps href="#" target="_blank" rel="noopener">Open in Google Maps</a>
+          <span data-i18n-html="facts.addressLines">232 St., cross 213 St.<br>Degla, Maadi, Cairo</span><br>
+          <a data-maps href="#" target="_blank" rel="noopener" data-i18n="cta.openMaps">Open in Google Maps</a>
         </dd>
       </div>
       <div>
-        <dt>Hours</dt>
+        <dt data-i18n="facts.hours">Hours</dt>
         <dd>
-          Every day<br>
-          8am – midnight<br>
-          <a href="visit.html">Full week</a>
+          <span data-i18n="home.hoursShort">Every day</span><br>
+          <span data-i18n="home.hoursRange">8am – midnight</span><br>
+          <a href="visit.html" data-i18n="cta.fullWeek">Full week</a>
         </dd>
       </div>
       <div>
-        <dt>Telephone</dt>
+        <dt data-i18n="facts.telephone">Telephone</dt>
         <dd>
           <a class="tel" href="tel:+20225171359">02 2517 1359</a>
           <a class="tel" href="tel:+20225170598">02 2517 0598</a>
@@ -132,14 +134,14 @@
         </dd>
       </div>
       <div>
-        <dt>Delivery</dt>
-        <dd><a href="https://www.elmenus.com/cairo/restless-coffee-house-bakery-2lng3" target="_blank" rel="noopener">Order on elmenus</a></dd>
+        <dt data-i18n="facts.delivery">Delivery</dt>
+        <dd><a href="https://www.elmenus.com/cairo/restless-coffee-house-bakery-2lng3" target="_blank" rel="noopener" data-i18n="cta.elmenus">Order on elmenus</a></dd>
       </div>
     </dl>
 
     <div class="notice">
-      <b>Still to come</b>
-      <p>Photography, the logo file, and the story of how Restless started. The palette and type here are taken from the badge, the printed menu and the room — the pictures are the missing half.</p>
+      <b data-i18n="notice.title">Still to come</b>
+      <p data-i18n="notice.body">Photography and the story of how Restless started. The palette and type here are taken from the badge, the printed menu and the room — the pictures are the missing half.</p>
     </div>
   </section>
 
@@ -148,13 +150,12 @@
 <footer class="site-foot">
   <div class="wrap">
     <div>
-      <strong>Restless Coffee House &amp; Bakery</strong><br>
-      232 St., cross 213 St.<br>
-      Degla, Maadi, Cairo
+      <strong data-i18n="foot.name">Restless Coffee House &amp; Bakery</strong><br>
+      <span data-i18n-html="facts.addressLines">232 St., cross 213 St.<br>Degla, Maadi, Cairo</span>
     </div>
     <div>
-      <a href="menu.html">Menu</a><br>
-      <a href="visit.html">Visit</a><br>
+      <a href="menu.html" data-i18n="nav.menu">Menu</a><br>
+      <a href="visit.html" data-i18n="nav.visit">Visit</a><br>
       <a href="https://www.instagram.com/restless.coffeehouse/" target="_blank" rel="noopener">Instagram</a><br>
       <a href="https://www.facebook.com/restless.coffeehouse/" target="_blank" rel="noopener">Facebook</a>
     </div>

@@ -20,41 +20,44 @@
 </head>
 
 <body>
-<a class="skip" href="#menu">Skip to the menu</a>
+<a class="skip" href="#menu" data-i18n="skip.menu">Skip to the menu</a>
 
 <header class="site-head">
   <div class="wrap">
     <a class="brand" href="index.html">
       <span class="brand-mark brand-mark--fallback" data-brand-mark aria-hidden="true">R</span>
-      <span class="brand-name">Restless<small>Coffee House &amp; Bakery</small></span>
+      <span class="brand-name">Restless<small data-i18n="brand.sub">Coffee House &amp; Bakery</small></span>
     </a>
-    <nav class="nav" aria-label="Primary">
-      <a href="index.html">Home</a>
-      <a href="menu.html" aria-current="page">Menu</a>
-      <a href="visit.html">Visit</a>
+    <div class="head-end">
+      <nav class="nav" data-i18n-aria="nav.aria" aria-label="Primary">
+      <a href="index.html"><span data-i18n="nav.home">Home</span></a>
+      <a href="menu.html" aria-current="page"><span data-i18n="nav.menu">Menu</span></a>
+      <a href="visit.html"><span data-i18n="nav.visit">Visit</span></a>
     </nav>
+      <button type="button" class="lang-toggle" data-lang-toggle hidden>عربي</button>
+    </div>
   </div>
 </header>
 
 <main>
   <section class="page-head wrap">
-    <p class="eyebrow">Menu</p>
-    <h1>What we&rsquo;re serving</h1>
+    <p class="eyebrow" data-i18n="menu.eyebrow">Menu</p>
+    <h1 data-i18n="menu.title">What we&rsquo;re serving</h1>
     <p style="margin-top:1rem"><span class="status" data-status hidden>Checking hours…</span></p>
 
     <ul class="actions">
-      <li><a class="btn btn--primary" data-whatsapp="Hi Restless, I'd like to place an order." href="#">Order on WhatsApp</a></li>
-      <li><a class="btn" data-tel href="#">Call us</a></li>
+      <li><a class="btn btn--primary" data-whatsapp="cta.whatsappMessage" href="#"><span data-i18n="cta.whatsapp">Order on WhatsApp</span></a></li>
+      <li><a class="btn" data-tel href="#" data-i18n="cta.call">Call us</a></li>
     </ul>
   </section>
 
   <section class="wrap" id="menu">
-    <div role="tablist" aria-label="Menus" class="menu-tabs" data-menu-tabs></div>
+    <div role="tablist" data-i18n-aria="menu.tabsAria" aria-label="Menus" class="menu-tabs" data-menu-tabs></div>
     <p class="menu-note" data-menu-note hidden></p>
     <ul class="menu-jump" data-menu-jump></ul>
 
     <div data-menu>
-      <p class="empty">Loading the menu…</p>
+      <p class="empty" data-i18n="menu.loading">Loading the menu…</p>
     </div>
   </section>
 </main>
@@ -62,13 +65,12 @@
 <footer class="site-foot">
   <div class="wrap">
     <div>
-      <strong>Restless Coffee House &amp; Bakery</strong><br>
-      232 St., cross 213 St.<br>
-      Degla, Maadi, Cairo
+      <strong data-i18n="foot.name">Restless Coffee House &amp; Bakery</strong><br>
+      <span data-i18n-html="facts.addressLines">232 St., cross 213 St.<br>Degla, Maadi, Cairo</span>
     </div>
     <div>
-      <a href="index.html">Home</a><br>
-      <a href="visit.html">Visit</a><br>
+      <a href="index.html" data-i18n="nav.home">Home</a><br>
+      <a href="visit.html" data-i18n="nav.visit">Visit</a><br>
       <a href="https://www.instagram.com/restless.coffeehouse/" target="_blank" rel="noopener">Instagram</a><br>
       <a href="https://www.facebook.com/restless.coffeehouse/" target="_blank" rel="noopener">Facebook</a>
     </div>

@@ -109,6 +109,94 @@
 }
 
 /* ==========================================================================
+   Arabic
+
+   Only the type changes. The palette, spacing and layout are shared, and
+   direction is handled by logical properties throughout rather than by
+   mirrored rules — so `dir="rtl"` on <html> flips the whole page on its own.
+
+   Amiri is a naskh with the same period feeling the brand already has;
+   Cairo carries the headings and interface. Both are fetched only when
+   Arabic is actually selected (see loadArabicFonts in site.js), so an
+   English visitor never downloads them.
+   ========================================================================== */
+
+[dir="rtl"] {
+  --f-display: "Cairo", "Segoe UI", Tahoma, sans-serif;
+  --f-body:    "Amiri", "Times New Roman", serif;
+  /* Yellowtail has no Arabic glyphs — the script role falls to Amiri italic,
+     which keeps the hand-set feel of the printed menu's section titles. */
+  --f-script:  "Amiri", "Times New Roman", serif;
+}
+
+/* Arabic needs more leading than Latin at the same size, and letter-spacing
+   applied to Arabic breaks the joins between letters. */
+[dir="rtl"] body { line-height: 1.85; }
+
+[dir="rtl"] .eyebrow,
+[dir="rtl"] .nav a,
+[dir="rtl"] .brand-name,
+[dir="rtl"] .brand-name small,
+[dir="rtl"] .menu-tabs button,
+[dir="rtl"] .menu-group,
+[dir="rtl"] .facts dt,
+[dir="rtl"] .badge,
+[dir="rtl"] .status {
+  letter-spacing: 0;
+}
+
+/* The brand name is a Latin wordmark in both languages; uppercasing Arabic
+   is meaningless, so it only applies where the text is actually Latin. */
+[dir="rtl"] .brand-name small,
+[dir="rtl"] .nav a,
+[dir="rtl"] .menu-tabs button,
+[dir="rtl"] .menu-group,
+[dir="rtl"] .facts dt,
+[dir="rtl"] .eyebrow {
+  text-transform: none;
+}
+
+[dir="rtl"] .menu-section > h2 { font-style: italic; font-weight: 700; }
+[dir="rtl"] .script { font-style: italic; }
+
+/* Prices and phone numbers stay Latin and left-to-right inside Arabic text. */
+[dir="rtl"] .menu-price,
+[dir="rtl"] .tel,
+[dir="rtl"] .hours td,
+[dir="rtl"] .addons b {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+/* ==========================================================================
+   language toggle
+   ========================================================================== */
+
+.lang-toggle {
+  appearance: none;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--ink-mid);
+  font-family: var(--f-display);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 0.4rem 0.9rem;
+  cursor: pointer;
+  line-height: 1.4;
+  transition: border-color 130ms ease, color 130ms ease;
+}
+.lang-toggle:hover { border-color: var(--sepia); color: var(--ink); }
+.lang-toggle[lang="ar"] { font-family: "Cairo", "Segoe UI", Tahoma, sans-serif; letter-spacing: 0; }
+
+.head-end { display: flex; align-items: center; gap: 1.25rem; }
+
+@media (max-width: 720px) {
+  .head-end { width: 100%; justify-content: space-between; }
+}
+
+/* ==========================================================================
    base
    ========================================================================== */
 
@@ -141,11 +229,11 @@ p:last-child { margin-bottom: 0; }
 .narrow { max-width: 760px; }
 
 .skip {
-  position: absolute; left: -9999px;
+  position: absolute; inset-inline-start: -9999px;
   background: var(--sepia); color: var(--on-sepia);
   padding: 0.7rem 1.1rem; z-index: 100;
 }
-.skip:focus { left: 1rem; top: 1rem; }
+.skip:focus { inset-inline-start: 1rem; top: 1rem; }
 
 /* -- shared type roles ---------------------------------------------------- */
 
@@ -393,8 +481,8 @@ p:last-child { margin-bottom: 0; }
 
 .hours { width: 100%; max-width: 400px; border-collapse: collapse; }
 .hours th, .hours td { padding: 0.55rem 0; border-bottom: 1px solid var(--line-soft); }
-.hours th { text-align: left; font-weight: 400; color: var(--ink-mid); }
-.hours td { text-align: right; font-variant-numeric: tabular-nums; color: var(--ink-mid); }
+.hours th { text-align: start; font-weight: 400; color: var(--ink-mid); }
+.hours td { text-align: end; font-variant-numeric: tabular-nums; color: var(--ink-mid); }
 .hours tr[data-today="true"] th,
 .hours tr[data-today="true"] td { color: var(--ink); font-weight: 600; }
 
@@ -446,7 +534,7 @@ p:last-child { margin-bottom: 0; }
 
 .menu-note {
   background: var(--surface-sunk);
-  border-left: 3px solid var(--red);
+  border-inline-start: 3px solid var(--red);
   padding: 0.9rem 1.2rem;
   margin: 1.75rem 0 0;
   font-size: 0.97rem;
@@ -575,7 +663,7 @@ p:last-child { margin-bottom: 0; }
   padding: 0.15rem 0.4rem;
   border-radius: 2px;
   vertical-align: 0.15em;
-  margin-left: 0.5rem;
+  margin-inline-start: 0.5rem;
 }
 
 .addons {

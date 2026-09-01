@@ -20,54 +20,57 @@
 </head>
 
 <body>
-<a class="skip" href="#main">Skip to content</a>
+<a class="skip" href="#main" data-i18n="skip.content">Skip to content</a>
 
 <header class="site-head">
   <div class="wrap">
     <a class="brand" href="index.html">
       <span class="brand-mark brand-mark--fallback" data-brand-mark aria-hidden="true">R</span>
-      <span class="brand-name">Restless<small>Coffee House &amp; Bakery</small></span>
+      <span class="brand-name">Restless<small data-i18n="brand.sub">Coffee House &amp; Bakery</small></span>
     </a>
-    <nav class="nav" aria-label="Primary">
-      <a href="index.html">Home</a>
-      <a href="menu.html">Menu</a>
-      <a href="visit.html" aria-current="page">Visit</a>
+    <div class="head-end">
+      <nav class="nav" data-i18n-aria="nav.aria" aria-label="Primary">
+      <a href="index.html"><span data-i18n="nav.home">Home</span></a>
+      <a href="menu.html"><span data-i18n="nav.menu">Menu</span></a>
+      <a href="visit.html" aria-current="page"><span data-i18n="nav.visit">Visit</span></a>
     </nav>
+      <button type="button" class="lang-toggle" data-lang-toggle hidden>عربي</button>
+    </div>
   </div>
 </header>
 
 <main id="main">
   <section class="page-head wrap">
-    <p class="eyebrow">Visit</p>
-    <h1>232 St., cross 213 St.<br>Degla, Maadi</h1>
+    <p class="eyebrow" data-i18n="visit.eyebrow">Visit</p>
+    <h1 data-i18n-html="visit.title">232 St., cross 213 St.<br>Degla, Maadi</h1>
     <p style="margin-top:1rem"><span class="status" data-status hidden>Checking hours…</span></p>
 
     <ul class="actions">
-      <li><a class="btn btn--primary" data-maps href="#" target="_blank" rel="noopener">Get directions</a></li>
-      <li><a class="btn" data-tel href="#">Call us</a></li>
-      <li><a class="btn" data-whatsapp="Hi Restless, I have a question." href="#">WhatsApp</a></li>
+      <li><a class="btn btn--primary" data-maps href="#" target="_blank" rel="noopener" data-i18n="cta.getDirections">Get directions</a></li>
+      <li><a class="btn" data-tel href="#" data-i18n="cta.call">Call us</a></li>
+      <li><a class="btn" data-whatsapp="cta.whatsappQuestion" href="#" data-i18n="cta.whatsappPlain">WhatsApp</a></li>
     </ul>
   </section>
 
   <section class="section wrap">
     <div class="section-head">
-      <p class="eyebrow">Opening hours</p>
-      <h2>Every day, 8am to midnight</h2>
+      <p class="eyebrow" data-i18n="visit.hours.eyebrow">Opening hours</p>
+      <h2 data-i18n="visit.hours.title">Every day, 8am to midnight</h2>
     </div>
     <table class="hours" data-hours-table>
       <tbody><tr><td>Loading…</td></tr></tbody>
     </table>
-    <p style="margin-top:1.25rem">Open seven days, Friday included. The kitchen and the bakery both run the full day.</p>
+    <p style="margin-top:1.25rem" data-i18n="visit.hours.note">Open seven days, Friday included. The kitchen and the bakery both run the full day.</p>
   </section>
 
   <section class="section wrap">
     <div class="section-head">
-      <p class="eyebrow">Contact</p>
-      <h2>Reaching us</h2>
+      <p class="eyebrow" data-i18n="visit.contact.eyebrow">Contact</p>
+      <h2 data-i18n="visit.contact.title">Reaching us</h2>
     </div>
     <dl class="facts">
       <div>
-        <dt>Telephone</dt>
+        <dt data-i18n="facts.telephone">Telephone</dt>
         <dd>
           <a class="tel" href="tel:+20225171359">02 2517 1359</a>
           <a class="tel" href="tel:+20225170598">02 2517 0598</a>
@@ -75,19 +78,19 @@
         </dd>
       </div>
       <div>
-        <dt>Delivery</dt>
-        <dd><a href="https://www.elmenus.com/cairo/restless-coffee-house-bakery-2lng3" target="_blank" rel="noopener">Order on elmenus</a></dd>
+        <dt data-i18n="facts.delivery">Delivery</dt>
+        <dd><a href="https://www.elmenus.com/cairo/restless-coffee-house-bakery-2lng3" target="_blank" rel="noopener" data-i18n="cta.elmenus">Order on elmenus</a></dd>
       </div>
       <div>
-        <dt>Social</dt>
+        <dt data-i18n="facts.social">Social</dt>
         <dd>
           <a href="https://www.instagram.com/restless.coffeehouse/" target="_blank" rel="noopener">Instagram</a><br>
           <a href="https://www.facebook.com/restless.coffeehouse/" target="_blank" rel="noopener">Facebook</a>
         </dd>
       </div>
       <div>
-        <dt>Parking</dt>
-        <dd>TODO — a line on where to park, and the Degla landmark that makes 232 St. easy to find.</dd>
+        <dt data-i18n="facts.parking">Parking</dt>
+        <dd data-i18n="facts.parkingTodo">TODO — a line on where to park, and the Degla landmark that makes 232 St. easy to find.</dd>
       </div>
     </dl>
   </section>
@@ -96,13 +99,12 @@
 <footer class="site-foot">
   <div class="wrap">
     <div>
-      <strong>Restless Coffee House &amp; Bakery</strong><br>
-      232 St., cross 213 St.<br>
-      Degla, Maadi, Cairo
+      <strong data-i18n="foot.name">Restless Coffee House &amp; Bakery</strong><br>
+      <span data-i18n-html="facts.addressLines">232 St., cross 213 St.<br>Degla, Maadi, Cairo</span>
     </div>
     <div>
-      <a href="index.html">Home</a><br>
-      <a href="menu.html">Menu</a><br>
+      <a href="index.html" data-i18n="nav.home">Home</a><br>
+      <a href="menu.html" data-i18n="nav.menu">Menu</a><br>
       <a href="https://www.instagram.com/restless.coffeehouse/" target="_blank" rel="noopener">Instagram</a><br>
       <a href="https://www.facebook.com/restless.coffeehouse/" target="_blank" rel="noopener">Facebook</a>
     </div>

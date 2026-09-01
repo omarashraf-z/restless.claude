@@ -2,9 +2,9 @@
 
 The website for Restless Coffee House & Bakery, 232 St. cross 213 St., Degla, Maadi, Cairo.
 
-**Status: real content, no photography.** The full menu (254 items), the real opening
-hours and the brand's own palette are all in. What's missing is imagery — the logo file
-and photographs. See [Outstanding](#outstanding) below.
+**Status: real content, bilingual, no photography.** The full menu (254 items), the real
+opening hours, the logo, the brand's own palette and an English/Arabic toggle are all in.
+What's missing is photography. See [Outstanding](#outstanding) below.
 
 ## The look
 
@@ -40,9 +40,11 @@ index.html          Home
 menu.html           Menu — rendered from data/menu.json
 visit.html          Hours, directions, phone numbers
 assets/css/site.css All styling. The palette is one :root block at the top.
-assets/js/site.js   Hours logic, contact links, menu rendering
+assets/js/site.js   Language, hours logic, contact links, menu rendering
+assets/img/         Logo (served copy + full-resolution master)
 data/site.json      Address, phones, WhatsApp, hours, delivery links
 data/menu.json      The entire menu
+data/i18n.json      Every interface string, in English and Arabic
 docs/               Project plan
 ```
 
@@ -61,13 +63,14 @@ Open `data/menu.json`. Each section holds a list of items:
   "name": "Flat White",
   "description": "Optional, one short line",
   "price": 85,
-  "tags": ["signature"]
+  "badge": "new"
 }
 ```
 
-`price: null` hides the price for that one item. Available tags: `vegetarian`, `vegan`,
-`spicy`, `contains-nuts`, `signature`. Save, commit, and the live site updates in about a
-minute. To hide every price at once, set `showPrices` to `false` in `data/site.json`.
+`price: null` hides the price for that one item; `badge` prints a small red flash beside
+the name, like the "new" flashes on the printed menu. Save, commit, and the live site
+updates in about a minute. To hide every price at once, set `showPrices` to `false` in
+`data/site.json`.
 
 ### Change opening hours
 
@@ -86,12 +89,34 @@ e.g. `201XXXXXXXXX`) and `whatsapp.enabled` to `true`. Every "Order on WhatsApp"
 across the site then opens a chat with the message pre-written. Until it's set, those
 buttons render disabled rather than broken.
 
+### Change the wording, or the Arabic
+
+All interface text lives in `data/i18n.json`, in an `en` and an `ar` block with
+matching keys. Nothing is hardcoded in the HTML — pages carry `data-i18n="key"`
+attributes and the script fills them in. Fix a wording by editing the value.
+
+The toggle in the header switches language, sets `dir="rtl"` on the page, and
+remembers the choice in the browser. A visitor whose browser is set to Arabic
+gets Arabic on their first visit without touching it.
+
+**What is and isn't translated.** Interface text, page copy, menu section names
+and section notes are all in both languages. **Menu item names and descriptions
+are not** — they render in English in both. That is deliberate on two counts:
+dish names on Egyptian café menus are normally left in Latin script anyway, and
+machine-translating 254 real items would put mistakes next to real prices.
+
+To translate any item, add `nameAr` and `descriptionAr` beside its `name` and
+`description` in `data/menu.json`. The site uses them when present and falls
+back to English when absent, so they can be filled in a few at a time.
+
+The tagline stays in English in both languages — it is a brand line, not copy,
+and rendering it in Arabic is the owner's call, not a translation decision.
+
 ### Change the colours
 
-`assets/css/site.css`, the `:root` block at the top. The current palette is a placeholder
-chosen to stay out of the way; it gets rebuilt from the logo. Colours are defined in three
-places — light, `prefers-color-scheme: dark`, and `[data-theme="dark"]` — so both themes
-stay consistent. Nothing else in the stylesheet uses a raw colour value.
+`assets/css/site.css`, the `:root` block at the top. Colours are defined in three places —
+light, `prefers-color-scheme: dark`, and `[data-theme="dark"]` — so both themes stay
+consistent. Nothing else in the stylesheet uses a raw colour value.
 
 ---
 
@@ -118,14 +143,13 @@ Needed from Restless before the site can go public:
 
 - [ ] **The real WhatsApp number.** `data/site.json` currently carries a placeholder that
       is publicly visible and receives every order button's message.
-- [ ] **The logo file**, saved as `assets/img/logo.png`. Every page picks it up
-      automatically; until then they show a typographic stand-in.
 - [ ] 10–15 photos: interior, counter, coffee, the bakery case, signature dishes
 - [ ] The Our Story copy — who started Restless, when, and why Maadi
 - [ ] Parking / landmark line for the Visit page
 - [ ] Live delivery links (Talabat, Instashop — elmenus is already in)
-- [ ] Language decision: English, Arabic, or both (bilingual is an architecture decision,
-      not a content one — worth settling early)
+- [ ] Arabic names for menu items, if wanted — see "Change the wording" above.
+      The café may already have an Arabic menu worth copying from.
+- [ ] A decision on whether the tagline should have an Arabic rendering
 - [ ] A domain
 
 ## Spellings
@@ -148,7 +172,6 @@ Still to build:
 - [ ] Cakes & catering page with the WhatsApp order flow
 - [ ] Our Story page
 - [ ] Real photography throughout, and an Open Graph image so shared links render as cards
-- [ ] Arabic / RTL, if we're doing it
 - [ ] A small CMS so staff can edit the menu without touching the repository
 
 The full plan is in [`docs/restless-website-plan.html`](docs/restless-website-plan.html).
