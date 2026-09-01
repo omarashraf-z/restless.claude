@@ -3,8 +3,8 @@
 
   "name": "Restless Coffee House & Bakery",
   "shortName": "Restless",
-  "tagline": "TODO — one line describing Restless, in the owner's own words",
-  "description": "TODO — two or three sentences for the home page and for search results",
+  "tagline": "The perks of the past in the present.",
+  "description": "A coffee house and bakery in Degla, Maadi. Breakfast from eight in the morning, coffee roasted dark and served properly, Neapolitan pizza and pasta from the kitchen, and croissants baked in-house — until midnight, every day.",
 
   "address": {
     "street": "232 St., cross 213 St.",
@@ -26,15 +26,15 @@
   "email": "TODO",
 
   "hours": {
-    "_note": "TODO — all seven days unconfirmed. 24-hour times. Set closed:true for a day off. Add ramadan overrides later if hours change.",
-    "_confirmed": false,
-    "sun": { "open": "09:00", "close": "01:00" },
-    "mon": { "open": "09:00", "close": "01:00" },
-    "tue": { "open": "09:00", "close": "01:00" },
-    "wed": { "open": "09:00", "close": "01:00" },
-    "thu": { "open": "09:00", "close": "02:00" },
-    "fri": { "open": "09:00", "close": "02:00" },
-    "sat": { "open": "09:00", "close": "01:00" }
+    "_note": "Open 8am to midnight, every day. 24-hour times; a close earlier than the open means the shift runs past midnight. Set closed:true for a day off. Add Ramadan overrides here if the hours change.",
+    "_confirmed": true,
+    "sun": { "open": "08:00", "close": "00:00" },
+    "mon": { "open": "08:00", "close": "00:00" },
+    "tue": { "open": "08:00", "close": "00:00" },
+    "wed": { "open": "08:00", "close": "00:00" },
+    "thu": { "open": "08:00", "close": "00:00" },
+    "fri": { "open": "08:00", "close": "00:00" },
+    "sat": { "open": "08:00", "close": "00:00" }
   },
 
   "delivery": {
