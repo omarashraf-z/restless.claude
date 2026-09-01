@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en" data-base="./">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Your order — Restless Coffee House &amp; Bakery</title>
+<meta name="description" content="Review your order from Restless, add your delivery address, and send it on WhatsApp.">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="noindex">
+
+<link rel="icon" href="assets/img/logo.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Yellowtail&display=swap">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+
+<body>
+<a class="skip" href="#main" data-i18n="skip.content">Skip to content</a>
+
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <img class="brand-mark" src="assets/img/logo.png" width="56" height="56"
+           alt="Restless Coffee House &amp; Bakery" data-brand-mark>
+      <span class="brand-name">Restless<small data-i18n="brand.sub">Coffee House &amp; Bakery</small></span>
+    </a>
+    <div class="head-end">
+      <nav class="nav" data-i18n-aria="nav.aria" aria-label="Primary">
+        <a href="index.html"><span data-i18n="nav.home">Home</span></a>
+        <a href="menu.html"><span data-i18n="nav.menu">Menu</span></a>
+        <a href="visit.html"><span data-i18n="nav.visit">Visit</span></a>
+      </nav>
+      <button type="button" class="lang-toggle" data-lang-toggle hidden>عربي</button>
+    </div>
+  </div>
+</header>
+
+<main id="main" data-checkout>
+  <section class="page-head wrap">
+    <p class="eyebrow" data-i18n="checkout.eyebrow">Checkout</p>
+    <h1 data-i18n="checkout.title">Your order</h1>
+  </section>
+
+  <section class="wrap checkout">
+
+    <!-- shown when nothing has been added -->
+    <div class="checkout-empty" data-checkout-empty hidden>
+      <p data-i18n="checkout.empty">Your order is empty.</p>
+      <p><a class="btn btn--primary" href="menu.html" data-i18n="checkout.browse">Browse the menu</a></p>
+    </div>
+
+    <div data-checkout-body hidden>
+
+      <div class="checkout-grid">
+
+        <!-- the order itself -->
+        <section class="checkout-card" aria-labelledby="order-h">
+          <h2 class="checkout-h" id="order-h" data-i18n="order.title">Your order</h2>
+          <ul class="order-lines" data-checkout-lines></ul>
+          <p class="checkout-total">
+            <span data-i18n="order.subtotal">Subtotal</span>
+            <b data-checkout-total>—</b>
+          </p>
+          <p class="order-note" data-i18n="order.beforeTax">Before 12% service charge and VAT.</p>
+          <p><a class="checkout-back" href="menu.html" data-i18n="checkout.addMore">Add more items</a></p>
+        </section>
+
+        <!-- who and where -->
+        <form class="checkout-card" data-checkout-form novalidate aria-labelledby="details-h">
+          <h2 class="checkout-h" id="details-h" data-i18n="checkout.details">Your details</h2>
+
+          <fieldset class="field">
+            <legend data-i18n="checkout.method">How would you like it?</legend>
+            <div class="choices">
+              <label class="choice">
+                <input type="radio" name="method" value="delivery" checked>
+                <span data-i18n="checkout.delivery">Delivery</span>
+              </label>
+              <label class="choice">
+                <input type="radio" name="method" value="pickup">
+                <span data-i18n="checkout.pickup">Pick up</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <label class="field">
+            <span class="label"><span data-i18n="checkout.name">Name</span></span>
+            <input type="text" name="name" autocomplete="name" required>
+            <em class="err" data-err="name" hidden></em>
+          </label>
+
+          <label class="field">
+            <span class="label"><span data-i18n="checkout.phone">Phone</span></span>
+            <input type="tel" name="phone" inputmode="tel" autocomplete="tel" required>
+            <em class="err" data-err="phone" hidden></em>
+          </label>
+
+          <div data-delivery-only>
+            <label class="field">
+              <span class="label"><span data-i18n="checkout.address">Address</span></span>
+              <textarea name="address" rows="2" autocomplete="street-address"></textarea>
+              <em class="err" data-err="address" hidden></em>
+            </label>
+
+            <label class="field">
+              <span class="label">
+                <span data-i18n="checkout.building">Building, floor, apartment</span>
+                <i data-i18n="checkout.optional">optional</i>
+              </span>
+              <input type="text" name="building">
+            </label>
+
+            <label class="field">
+              <span class="label">
+                <span data-i18n="checkout.landmark">Nearest landmark</span>
+                <i data-i18n="checkout.optional">optional</i>
+              </span>
+              <input type="text" name="landmark">
+            </label>
+          </div>
+
+          <label class="field">
+            <span class="label">
+              <span data-i18n="checkout.notes">Notes for the kitchen</span>
+              <i data-i18n="checkout.optional">optional</i>
+            </span>
+            <textarea name="notes" rows="2"></textarea>
+          </label>
+
+          <label class="check">
+            <input type="checkbox" name="remember" checked>
+            <span data-i18n="checkout.remember">Remember my details on this device</span>
+          </label>
+
+          <button type="submit" class="btn btn--primary checkout-send" data-checkout-send>
+            <span data-i18n="checkout.send">Send order on WhatsApp</span>
+          </button>
+
+          <p class="checkout-disclaimer" data-i18n="checkout.disclaimer">
+            This opens WhatsApp with your order written out. Nothing is sent until you press send there.
+          </p>
+        </form>
+
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div>
+      <strong data-i18n="foot.name">Restless Coffee House &amp; Bakery</strong><br>
+      <span data-i18n-html="facts.addressLines">232 St., cross 213 St.<br>Degla, Maadi, Cairo</span>
+    </div>
+    <div>
+      <a href="index.html" data-i18n="nav.home">Home</a><br>
+      <a href="menu.html" data-i18n="nav.menu">Menu</a><br>
+      <a href="visit.html" data-i18n="nav.visit">Visit</a>
+    </div>
+    <div>
+      <span class="script">The perks of the past<br>in the present</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/site.js" defer></script>
+</body>
+</html>

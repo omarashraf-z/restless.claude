@@ -337,18 +337,36 @@ function changeQty(key, name, price, delta) {
   renderOrder();
 }
 
-function orderMessage(currency) {
+/* `details` is absent when the message is composed anywhere but the checkout
+ * page — the order still reads correctly, it just has no name or address. */
+function orderMessage(currency, details) {
   const lines = [...state.order.values()]
     .map((l) => `• ${l.qty}× ${l.name} — ${money(l.qty * l.price)} ${currency}`);
 
-  return [
+  const parts = [
     t('order.msgIntro'),
     '',
     ...lines,
     '',
     `${t('order.subtotal')}: ${money(orderTotal())} ${currency}`,
     t('order.beforeTax')
-  ].join('\n');
+  ];
+
+  if (details) {
+    const rows = [
+      [t('msg.name'), details.name],
+      [t('msg.phone'), details.phone],
+      details.method === 'delivery' && [t('msg.address'), details.address],
+      details.method === 'delivery' && [t('msg.building'), details.building],
+      details.method === 'delivery' && [t('msg.landmark'), details.landmark],
+      [t('msg.notes'), details.notes]
+    ].filter((row) => row && row[1]);
+
+    parts.push('', t(details.method === 'pickup' ? 'msg.pickup' : 'msg.delivery'));
+    for (const [label, value] of rows) parts.push(`${label}: ${value}`);
+  }
+
+  return parts.join('\n');
 }
 
 /* Quantity control shown on every priced item. */
@@ -424,10 +442,17 @@ function renderOrder() {
     node.replaceWith(orderControl(orderKey, orderName, Number(orderPrice)));
   }
 
-  const bar = orderBar();
   const count = orderCount();
   const currency = state.menu?.currency ?? state.site?.currency ?? 'EGP';
 
+  // On the checkout page the order *is* the page, so the bar would only
+  // duplicate it.
+  if (document.querySelector('[data-checkout]')) {
+    renderCheckout(currency);
+    return;
+  }
+
+  const bar = orderBar();
   bar.hidden = count === 0;
   document.body.classList.toggle('has-order', count > 0);
   if (count === 0) {
@@ -470,15 +495,155 @@ function renderOrder() {
     );
   }
 
+  // The bar hands off to checkout rather than straight to WhatsApp: an order
+  // with no name, phone or address is not much use to the kitchen.
   const send = bar.querySelector('.order-send');
-  send.textContent = t('order.send');
-  if (state.site?.whatsapp?.enabled) {
-    send.href = `https://wa.me/${state.site.whatsapp.number}?text=${encodeURIComponent(orderMessage(currency))}`;
-    send.removeAttribute('aria-disabled');
-  } else {
-    send.removeAttribute('href');
-    send.setAttribute('aria-disabled', 'true');
+  send.textContent = t('order.checkout');
+  send.href = base() + 'order.html';
+  send.removeAttribute('aria-disabled');
+}
+
+/* -- checkout --------------------------------------------------------------
+ *
+ * The order alone is not much use to the kitchen: they need to know who it is
+ * for, how to reach them, and where it is going. This collects that, then
+ * composes the whole thing into the WhatsApp message.
+ *
+ * Details are kept on the visitor's own device only if they tick the box, so a
+ * shared or borrowed phone does not keep somebody's address and number. */
+
+const CUSTOMER_KEY = 'restless.customer';
+
+function loadCustomer(form) {
+  let saved;
+  try { saved = JSON.parse(localStorage.getItem(CUSTOMER_KEY) || 'null'); } catch { return; }
+  if (!saved) return;
+
+  for (const [name, value] of Object.entries(saved)) {
+    const el = form.elements[name];
+    if (el && typeof value === 'string') el.value = value;
   }
+  if (saved.method) {
+    const radio = [...form.elements.method].find((r) => r.value === saved.method);
+    if (radio) radio.checked = true;
+  }
+}
+
+function saveCustomer(form, details) {
+  try {
+    if (!form.elements.remember.checked) {
+      localStorage.removeItem(CUSTOMER_KEY);
+      return;
+    }
+    localStorage.setItem(CUSTOMER_KEY, JSON.stringify(details));
+  } catch { /* storage unavailable — details just aren't remembered */ }
+}
+
+const readForm = (form) => ({
+  method: form.elements.method.value,
+  name: form.elements.name.value.trim(),
+  phone: form.elements.phone.value.trim(),
+  address: form.elements.address.value.trim(),
+  building: form.elements.building.value.trim(),
+  landmark: form.elements.landmark.value.trim(),
+  notes: form.elements.notes.value.trim()
+});
+
+/* Deliberately lenient. Egyptian numbers get written 01x…, +201x… and with
+ * spaces or dashes; rejecting a real number is worse than accepting a typo. */
+const looksLikePhone = (v) => (v.match(/\d/g) || []).length >= 8;
+
+function showError(form, name, message) {
+  const slot = form.querySelector(`[data-err="${name}"]`);
+  const input = form.elements[name];
+  if (!slot) return;
+  slot.textContent = message || '';
+  slot.hidden = !message;
+  if (input) input.setAttribute('aria-invalid', message ? 'true' : 'false');
+}
+
+function validate(form) {
+  const d = readForm(form);
+  const problems = [];
+
+  showError(form, 'name', '');
+  showError(form, 'phone', '');
+  showError(form, 'address', '');
+
+  if (!d.name) { showError(form, 'name', t('checkout.errName')); problems.push('name'); }
+  if (!looksLikePhone(d.phone)) { showError(form, 'phone', t('checkout.errPhone')); problems.push('phone'); }
+  if (d.method === 'delivery' && !d.address) {
+    showError(form, 'address', t('checkout.errAddress'));
+    problems.push('address');
+  }
+
+  if (problems.length) {
+    form.elements[problems[0]].focus();
+    return null;
+  }
+  return d;
+}
+
+function renderCheckout(currency) {
+  const empty = document.querySelector('[data-checkout-empty]');
+  const body = document.querySelector('[data-checkout-body]');
+  const count = orderCount();
+
+  if (empty) empty.hidden = count > 0;
+  if (body) body.hidden = count === 0;
+  if (count === 0) return;
+
+  const list = document.querySelector('[data-checkout-lines]');
+  if (list) {
+    list.replaceChildren(...[...state.order.values()].map((line) => {
+      const li = el('li');
+      li.append(el('span', 'order-line-name', line.name));
+      li.append(el('span', 'order-line-sum', `${money(line.qty * line.price)} ${currency}`));
+      li.append(orderControl(line.key, line.name, line.price));
+      return li;
+    }));
+  }
+
+  const total = document.querySelector('[data-checkout-total]');
+  if (total) total.textContent = `${money(orderTotal())} ${currency}`;
+}
+
+function initCheckout() {
+  const form = document.querySelector('[data-checkout-form]');
+  if (!form) return;
+
+  const deliveryOnly = form.querySelector('[data-delivery-only]');
+  const syncMethod = () => {
+    const pickup = form.elements.method.value === 'pickup';
+    if (deliveryOnly) deliveryOnly.hidden = pickup;
+    if (pickup) showError(form, 'address', '');
+  };
+  for (const radio of form.elements.method) radio.addEventListener('change', syncMethod);
+
+  loadCustomer(form);
+  syncMethod();
+
+  // Clear an error as soon as the visitor starts fixing it.
+  for (const name of ['name', 'phone', 'address']) {
+    form.elements[name]?.addEventListener('input', () => showError(form, name, ''));
+  }
+
+  const send = form.querySelector('[data-checkout-send]');
+  if (!state.site?.whatsapp?.enabled) send.setAttribute('aria-disabled', 'true');
+
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    if (!state.site?.whatsapp?.enabled || orderCount() === 0) return;
+
+    const details = validate(form);
+    if (!details) return;
+
+    saveCustomer(form, { ...details, remember: true });
+
+    const currency = state.menu?.currency ?? state.site?.currency ?? 'EGP';
+    const text = encodeURIComponent(orderMessage(currency, details));
+    window.location.href = `https://wa.me/${state.site.whatsapp.number}?text=${text}`;
+  });
 }
 
 /* -- menu ----------------------------------------------------------------- */
@@ -641,6 +806,7 @@ function renderAll() {
   }
 
   guardBrandMark(state.site);
+  initCheckout();
 
   if (document.querySelector('[data-menu]')) {
     try {

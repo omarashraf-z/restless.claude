@@ -38,6 +38,7 @@ That's a deliberate choice for this site:
 ```
 index.html          Home
 menu.html           Menu — rendered from data/menu.json
+order.html          Checkout — review, address, send on WhatsApp
 visit.html          Hours, directions, phone numbers
 assets/css/site.css All styling. The palette is one :root block at the top.
 assets/js/site.js   Language, hours logic, contact links, menu rendering
@@ -96,10 +97,19 @@ collects into a bar at the foot of the page, and **Send on WhatsApp** opens a ch
 with the order written out — item, quantity, line total, subtotal, and a line
 saying the total is before service and VAT.
 
+The bar hands off to **`order.html`**, the checkout page, rather than straight to
+WhatsApp — an order with no name, phone or address is not much use to the
+kitchen. There the visitor reviews the lines, chooses delivery or pick-up, and
+gives name, phone, address, building and floor, a landmark and any notes.
+Address fields hide themselves for pick-up. Only then does the WhatsApp button
+compose the whole thing.
+
 Nothing is transmitted anywhere until they press send. The basket lives in their
 own browser (`localStorage`), survives moving between pages, and is stored with
 each item's name and price rather than a pointer into the menu — so editing a
-price later can never silently rewrite somebody's open basket.
+price later can never silently rewrite somebody's open basket. Customer details
+are saved on the device only if the visitor leaves the box ticked, so a shared
+phone does not keep somebody's address and number.
 
 It needs no server, no payment provider and no monthly cost. It turns off on its
 own if `showPrices` is `false`, since an order with no prices is meaningless, and
