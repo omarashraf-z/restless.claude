@@ -404,14 +404,21 @@ p:last-child { margin-bottom: 0; }
 
 /* -- tabs: All Day / Breakfast / Drinks ----------------------------------- */
 
+/* Three short tabs. They wrap on a very narrow screen rather than scrolling —
+ * a scrolling strip hides options the reader never discovers.
+ *
+ * The active underline is an inset shadow, not a border with a negative
+ * margin. A negative margin would push content past the container's box, and
+ * since `overflow-x` also forces `overflow-y` to `auto`, that produced a
+ * stray vertical scrollbar on the strip. */
 .menu-tabs {
   display: flex;
+  flex-wrap: wrap;
   gap: 0;
   border-bottom: 2px solid var(--ink);
   margin-bottom: 0;
   padding: 0;
   list-style: none;
-  overflow-x: auto;
 }
 .menu-tabs button {
   appearance: none;
@@ -426,11 +433,16 @@ p:last-child { margin-bottom: 0; }
   color: var(--ink-soft);
   cursor: pointer;
   white-space: nowrap;
-  border-bottom: 3px solid transparent;
-  margin-bottom: -2px;
 }
 .menu-tabs button:hover { color: var(--ink); }
-.menu-tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--red); }
+.menu-tabs button[aria-selected="true"] {
+  color: var(--ink);
+  box-shadow: inset 0 -3px 0 var(--red);
+}
+
+@media (max-width: 420px) {
+  .menu-tabs button { padding-inline: 1rem; }
+}
 
 .menu-note {
   background: var(--surface-sunk);
