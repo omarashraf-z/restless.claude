@@ -228,6 +228,17 @@ p:last-child { margin-bottom: 0; }
 .wrap { max-width: var(--wide); margin: 0 auto; padding-inline: var(--pad); }
 .narrow { max-width: 760px; }
 
+/* The header and footer are the page's frame rather than part of its column,
+ * so they run to the edges of the screen instead of stopping at the content
+ * measure. On a wide display that puts the logo and the nav where the eye
+ * looks for them; the reading content between them stays centred and narrow.
+ * The lower bound matches --pad, so nothing changes on a phone. */
+.site-head .wrap,
+.site-foot .wrap {
+  max-width: none;
+  padding-inline: clamp(1.15rem, 3.5vw, 3.25rem);
+}
+
 .skip {
   position: absolute; inset-inline-start: -9999px;
   background: var(--sepia); color: var(--on-sepia);
@@ -727,6 +738,15 @@ p:last-child { margin-bottom: 0; }
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
   gap: 1.75rem 2.5rem;
+}
+
+/* Now that the footer runs edge to edge, auto-fit would keep minting columns
+ * on a wide screen and leave the three real ones bunched at the left. Pin it
+ * to three and push the last to the far edge, so the footer is anchored at
+ * both ends the way the header is. */
+@media (min-width: 900px) {
+  .site-foot .wrap { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .site-foot .wrap > :last-child { justify-self: end; text-align: end; }
 }
 .site-foot a { color: var(--ink-mid); }
 .site-foot a:hover { color: var(--red); }
