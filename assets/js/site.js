@@ -157,8 +157,8 @@ function loadBrandMark(site) {
         const img = el('img', 'brand-mark');
         img.src = src;
         img.alt = `${site.name} logo`;
-        img.width = 42;
-        img.height = 42;
+        img.width = 56;
+        img.height = 56;
         slot.replaceWith(img);
       }
       const favicon = document.querySelector('link[rel="icon"]');

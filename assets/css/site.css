@@ -200,22 +200,25 @@ p:last-child { margin-bottom: 0; }
   color: var(--ink);
 }
 
+/* The badge is a detailed illustration — below about 50px the ring lettering
+ * and the figure both turn to mush, so it gets more room than a simple mark
+ * would need. */
 .brand-mark {
-  width: 42px; height: 42px;
-  border-radius: 50%;
+  width: 56px; height: 56px;
   flex: none;
   object-fit: contain;
 }
 
-/* Typographic stand-in shown until assets/img/logo.png exists. */
+/* Typographic stand-in shown until a logo file exists in assets/img/. */
 .brand-mark--fallback {
   display: grid;
   place-items: center;
+  border-radius: 50%;
   background: var(--sepia);
   color: var(--on-sepia);
   font-family: var(--f-display);
   font-weight: 700;
-  font-size: 0.85rem;
+  font-size: 1.05rem;
   letter-spacing: 0.02em;
   box-shadow: inset 0 0 0 2px var(--paper), inset 0 0 0 3px var(--sepia);
 }
